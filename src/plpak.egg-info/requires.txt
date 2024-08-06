@@ -1,0 +1,3 @@
+cantera==2.6.0
+sympy==1.11.1
+numpy==1.23.5

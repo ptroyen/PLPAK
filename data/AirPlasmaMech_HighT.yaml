@@ -1,0 +1,1719 @@
+description: |-
+  ""
+
+generator: cti2yaml
+cantera-version: 2.6.0
+date: Sun, 04 Dec 2022 18:12:36 -0600
+input-files: [plasmaN2.cti]
+
+units: {length: cm, quantity: mol, activation-energy: cal/mol}
+
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [O, N, E]
+  species: [N, N2, N2_A, N2_B, N2_C, N2_ap,
+            O, O2, O_D, O3, NO,
+            Np, N2p, N3p, N4p,
+            O2p, Op, O4p, NOp,
+            Om, O2m, ele]
+  kinetics: gas
+  reactions: all
+  state:
+    T: 300.0
+    P: 1.01325e+05
+species:
+- name: N
+  composition: {N: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [200.0, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [0.0, 0.0, 2.5, 0.0, 0.0, 0.0, 0.0, 5.61046378e+04, 4.193905036]
+    - [8.87650138e+04, -107.12315, 2.362188287, 2.916720081e-04, -1.7295151e-07,
+      4.01265788e-11, -2.677227571e-15, 5.69735133e+04, 4.865231506]
+    - [5.47518105e+08, -3.10757498e+05, 69.1678274, -6.84798813e-03, 3.8275724e-07,
+      -1.098367709e-11, 1.277986024e-16, 2.550585618e+06, -584.8769753]
+  transport:
+    model: gas
+    geometry: atom
+    diameter: 3.298
+    well-depth: 71.4
+  note: Hf:Cox,1989. Moore,1975. Gordon,1999. [g 5/97]
+- name: N2
+  composition: {N: 2}
+  thermo:
+    model: NASA9
+    temperature-ranges: [200.0, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [2.210371497e+04, -381.846182, 6.08273836, -8.53091441e-03, 1.384646189e-05,
+      -9.62579362e-09, 2.519705809e-12, 710.846086, -10.76003744]
+    - [5.87712406e+05, -2239.249073, 6.06694922, -6.1396855e-04, 1.491806679e-07,
+      -1.923105485e-11, 1.061954386e-15, 1.283210415e+04, -15.86640027]
+    - [8.31013916e+08, -6.42073354e+05, 202.0264635, -0.03065092046, 2.486903333e-06,
+      -9.70595411e-11, 1.437538881e-15, 4.93870704e+06, -1672.09974]
+  note: Ref-Elm. Gurvich,1978 pt1 p280 pt2 p207. [tpis78]
+- name: N2_A
+  composition: {N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [280.0, 1000.0, 6000.0]
+    data:
+    - [3.25532953e+00, 6.69447964e-04, 1.30210602e-06, -1.01156007e-09, 3.72216904e-14,
+     7.05783998e+04, 5.66217602e+00]
+    - [3.64002548e+00, 8.89403892e-04,-3.33167891e-07, 6.03361950e-11,-4.05253069e-15,
+    7.03690979e+04, 3.25549140e+00]
+    
+  note: Ref-Elm. Gurvich,1978 pt1 p280 pt2 p207. [tpis78]
+- name: N2_B
+  composition: {N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [280.0, 1000.0, 6000.0]
+    data:
+    - [3.48039164e+00,-4.90104275e-04, 2.35386610e-06, -9.97872504e-10,-1.89663537e-13,
+     8.42955492e+04, 5.40534846e+00]
+    - [3.42906968e+00, 1.04510931e-03,-3.76726517e-07, 6.29598111e-11,-3.79486214e-15,
+     8.41870801e+04, 5.18987278e+00]
+    
+  note: Ref-Elm. Gurvich,1978 pt1 p280 pt2 p207. [tpis78]
+- name: N2_C
+  composition: {N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [280.0, 1000.0, 6000.0]
+    data:
+    - [3.54083167e+00, -5.03315502e-04, 1.09199793e-06,  8.31149879e-10,-9.08189819e-13,
+     1.26974751e+05, 4.83621115e+00]
+    - [3.20508847e+00, 1.21966767e-03,-4.43470555e-07, 7.61101359e-11,-4.92155953e-15, 
+    1.26968932e+05, 6.22605692e+00]
+    
+  note: Ref-Elm. Gurvich,1978 pt1 p280 pt2 p207. [tpis78]
+- name: Np
+  composition: {E: -1, N: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [5237.07921, 2.299958315, 2.487488821, 2.737490756e-05, -3.134447576e-08,
+      1.850111332e-11, -4.447350984e-15, 2.256284738e+05, 5.076830786]
+    - [2.904970374e+05, -855.790861, 3.47738929, -5.28826719e-04, 1.352350307e-07,
+      -1.389834122e-11, 5.046166279e-16, 2.310809984e+05, -1.994146545]
+    - [1.646092148e+07, -1.113165218e+04, 4.97698664, -2.005393583e-04,
+      1.022481356e-08, -2.691430863e-13, 3.539931593e-18, 3.136284696e+05,
+      -17.0664638]
+  note: Moore,1975. Gordon,1999. [g 6/97]
+- name: N2p
+  composition: {E: -1, N: 2}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-3.47404747e+04, 269.6222703, 3.16491637, -2.132239781e-03, 6.7304764e-06,
+      -5.63730497e-09, 1.621756e-12, 1.790004424e+05, 6.832974166]
+    - [-2.845599002e+06, 7058.89303, -2.884886385, 3.068677059e-03, -4.36165231e-07,
+      2.102514545e-11, 5.41199647e-16, 1.340388483e+05, 50.90897022]
+    - [-3.71282977e+08, 3.139287234e+05, -96.0351805, 0.01571193286, -1.175065525e-06,
+      4.14444123e-11, -5.62189309e-16, -2.217361867e+06, 843.6270947]
+  note: Gurvich,1989 pt1 p323 pt2 p200. [tpis89]
+- name: N3p
+  composition: {E: -1, N: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [298.15, 1000.0, 6000.0]
+    data:
+    - [3.67011652E+00, 4.59806506E-03, 1.39108363E-06,-5.02694961E-09, 2.21155760E-12,
+     1.81883765E+05, 3.94467784E+00]
+    - [5.48199577E+00, 2.01665176E-03,-7.78258436E-07, 1.31617313E-10,-8.13320494E-15, 
+    1.81240003E+05,-6.06985591E+00]
+    
+  note: Mutationpp/blob/master/data/thermo/nasa7.dat
+- name: N4p
+  composition: {E: -1, N: 4}
+  thermo:
+    model: NASA7
+    temperature-ranges: [298.15, 1000.0, 6000.0]
+    data:
+    - [3.32596515E+00, 1.43909181E-02,-1.56797253E-05, 9.52287848E-09,-2.53566648E-12,
+     2.15553183E+05, 7.82290640E+00]
+    - [7.05285816E+00, 2.91094469E-03,-1.11573999E-06, 1.87883944E-10,-1.15769013E-14, 
+    2.14540545E+05,-1.12429353E+01]
+    
+  note: Mutationpp/blob/master/data/thermo/nasa7.dat
+- name: ele
+  composition: {E: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [0.0, 0.0, 2.5, 0.0, 0.0, 0.0, 0.0, -745.375, -11.72081224]
+    - [0.0, 0.0, 2.5, 0.0, 0.0, 0.0, 0.0, -745.375, -11.72081224]
+    - [0.0, 0.0, 2.5, 0.0, 0.0, 0.0, 0.0, -745.375, -11.72081224]
+  note: Ref-Species. Chase,1998 3/82. [g12/98]
+- name: N2_ap
+  composition: {N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.53100528, -1.23660988e-04, -5.02999433e-07, 2.43530612e-09, -1.40881235e-12,
+      9.64193789e+04, 2.96747038]
+    - [2.95257637, 1.3969004e-03, -4.92631603e-07, 7.86010195e-11, -4.60755204e-15,
+      9.65424065e+04, 5.87188762]
+  note: N2 excited - Thermo data from DeFilippo & Chen 2016
+
+- name: O2
+  composition: {O: 2}
+  thermo:
+    model: NASA9
+    temperature-ranges: [200.0, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-3.42556342e+04, 484.700097, 1.119010961, 4.29388924e-03, -6.83630052e-07,
+      -2.0233727e-09, 1.039040018e-12, -3391.45487, 18.4969947]
+    - [-1.037939022e+06, 2344.830282, 1.819732036, 1.267847582e-03, -2.188067988e-07,
+      2.053719572e-11, -8.19346705e-16, -1.689010929e+04, 17.38716506]
+    - [4.9752943e+08, -2.866106874e+05, 66.9035225, -6.16995902e-03, 3.016396027e-07,
+      -7.4214166e-12, 7.27817577e-17, 2.293554027e+06, -553.062161]
+    note: Ref-Elm. Gurvich,1989 pt1 p94 pt2 p9. [tpis89]
+- name: NO
+  composition: {N: 1, O: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [200.0, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-1.143916503e+04, 153.6467592, 3.43146873, -2.668592368e-03, 8.48139912e-06,
+      -7.68511105e-09, 2.386797655e-12, 9098.21441, 6.72872549]
+    - [2.239018716e+05, -1289.651623, 5.43393603, -3.6560349e-04, 9.88096645e-08,
+      -1.416076856e-11, 9.38018462e-16, 1.750317656e+04, -8.50166909]
+    - [-9.57530354e+08, 5.91243448e+05, -138.4566826, 0.01694339403, -1.007351096e-06,
+      2.912584076e-11, -3.29510935e-16, -4.67750124e+06, 1242.081216]
+    note: Gurvich,1978,1989 pt1 p326 pt2 p203. [tpis89]
+- name: O
+  composition: {O: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [200.0, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-7953.6113, 160.7177787, 1.966226438, 1.01367031e-03, -1.110415423e-06,
+      6.5175075e-10, -1.584779251e-13, 2.840362437e+04, 8.40424182]
+    - [2.619020262e+05, -729.872203, 3.31717727, -4.28133436e-04, 1.036104594e-07,
+      -9.43830433e-12, 2.725038297e-16, 3.39242806e+04, -0.667958535]
+    - [1.779004264e+08, -1.082328257e+05, 28.10778365, -2.975232262e-03,
+      1.854997534e-07, -5.79623154e-12, 7.191720164e-17, 8.89094263e+05,
+      -218.1728151]
+    note: D0(O2):Brix,1954. Moore,1976. Gordon,1999. [g 5/97]
+
+
+- name: O2p
+  composition: {O: 2, E: -1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-8.60720545e+04, 1051.875934, -0.543238047, 6.57116654e-03, -3.27426375e-06,
+      5.94064534e-11, 3.23878479e-13, 1.345544668e+05, 29.0270975]
+    - [7.38465488e+04, -845.955954, 4.98516416, -1.61101089e-04, 6.42708399e-08,
+      -1.504939874e-11, 1.578465409e-15, 1.446321044e+05, -5.81123065]
+    - [-1.562125524e+09, 1.161406778e+06, -330.250472, 0.0471093752, -3.35446138e-06,
+      1.167968599e-10, -1.589754791e-15, -8.85786627e+06, 2852.035602]
+    note: Gurvich,1989 pt1 p98 pt2 p11. [tpis89]
+- name: NOp
+  composition: {N: 1, O: 1, E: -1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [1398.106635, -159.0446941, 5.1228954, -6.39438862e-03, 1.123918342e-05,
+      -7.98858126e-09, 2.107383677e-12, 1.187495132e+05, -4.39843381]
+    - [6.0698769e+05, -2278.395427, 6.08032467, -6.06684758e-04, 1.432002611e-07,
+      -1.747990522e-11, 8.93501406e-16, 1.322709615e+05, -15.19880037]
+    - [2.676400347e+09, -1.83294869e+06, 509.924939, -0.0711381928, 5.31765988e-06,
+      -1.963208212e-10, 2.80526823e-15, 1.443308939e+07, -4324.044462]
+    note: 'Cp,S,IP(NO): Gurvich,1989 pt1 p330 pt2 p205. [g 5/99]'
+- name: Op
+  composition: {O: 1, E: -1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [0.0, 0.0, 2.5, 0.0, 0.0, 0.0, 0.0, 1.879352842e+05, 4.39337676]
+    - [-2.166513208e+05, 666.545615, 1.702064364, 4.71499281e-04, -1.427131823e-07,
+      2.016595903e-11, -9.107157762e-16, 1.837191966e+05, 10.05690382]
+    - [-2.143835383e+08, 1.469518523e+05, -36.8086454, 5.03616454e-03, -3.087873854e-07,
+      9.18683487e-12, -1.074163268e-16, -9.61420896e+05, 342.619308]
+    note: Martin,W.C.,1993. Gordon,1999. [g 8/97]
+
+- name: O_D
+  composition: {O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [2.49993786, 1.71935346e-07, -3.45215267e-10, 3.71342028e-13, -1.70964494e-16,
+      5.19965317e+04, 4.61684555]
+    - [2.49368475, 1.37617903e-05, -1.00401058e-08, 2.76012182e-12, -2.01597513e-16,
+      5.19986304e+04, 4.6505095]
+  note: Thermo data from DeFilippo & Chen 2016 same as HP-mech
+
+- name: O2m
+  composition: {O: 2, E: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [ 1.883874344e+04, 1.149551768e+02, 1.518876821e+00, 8.016111380e-03, -9.850571030e-06,
+ 6.044196210e-09,-1.486439845e-12, -7.101538760e+03, 1.501210380e+01]
+    - [-5.655208050e+04, -2.367815862e+02, 4.675833670e+00,-2.197245300e-05, 1.711509280e-08,
+-1.757645062e-12, 8.248172790e-17, -5.960177750e+03,-2.436885556e+00]
+    - [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    note: Ref-Species. Gurvich,1989 3/82.
+- name: O3
+  composition: {O: 3}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-1.282314507e+04, 5.898216640e+02, -2.547496763e+00, 2.690121526e-02, -3.528258340e-05,
+ 2.312290922e-08,-6.044893270e-12, 1.348368701e+04, 3.852218580e+01 ]
+    - [-3.869662480e+07, 1.023344994e+05, -8.961551600e+01, 3.706144970e-02, -4.137638740e-06,
+-2.725018591e-10, 5.248188110e-14, -6.517918180e+05, 7.029109520e+02 ]
+    - [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    note: Ref-Species. Gurvich,1989 3/82
+- name: Om
+  composition: {O: 1, E: 1}
+  thermo:
+    model: NASA9
+    temperature-ranges: [298.15, 1000.0, 6000.0, 2.0e+04]
+    data:
+    - [-5.695857110e+03, 1.099287334e+02, 2.184719661e+00, 5.326359800e-04, -5.298878440e-07,
+ 2.870216236e-10, -6.524692740e-14, 1.093287498e+04, 6.729863860e+00]
+    - [ 9.769363180e+03, 7.159604780e+00, 2.494961726e+00, 1.968240938e-06, -4.304174850e-10,
+ 4.912083080e-14, -2.271600083e-18, 1.149554438e+04, 4.837036440e+00]
+    - [ 5.662391000e+02, 7.572340320e+00, 2.498352500e+00, 1.862632395e-07, -1.151227211e-11,
+ 3.688814210e-16, -4.793297600e-21, 1.148426000e+04, 4.813406590e+00]
+    note: Ref-Species. Gurvich,1989 3/82
+- name: O4p
+  composition: {E: -1, O: 4}
+  thermo:
+    model: NASA7
+    temperature-ranges: [298.15, 1000.0, 6000.0]
+    data:
+    - [1.15107802, 0.0215570328, -2.10270939e-05, 8.21140809e-09, -6.4976098e-13,
+      1.72530097e+05, 18.1430748]
+    - [7.57784346, 2.48052052e-03, -9.7113343e-07, 1.65738251e-10, -1.0304774e-14,
+      1.70839793e+05, -14.6808901]
+  note: thermal data from Burcat
+newAttributeSet:
+  unit: m
+  vars: {T: 'T',Tv: 'Tv', Te: 'Te'}
+
+reactions: 
+- equation: 2 N + N2 => N2_B + N2 # Reaction 1
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (8.27e-46*exp(500/T))
+
+- equation: N2_A => N2 # Reaction 2
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (0.5)
+  energyExchange: {type: zero}
+
+- equation: N2_B => N2_A # Reaction 3
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (152000.0)
+  energyExchange: {type: zero}
+
+- equation: N2_C => N2_B # Reaction 4
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (26900000.0)
+  energyExchange: {type: zero}
+
+- equation: 2 N2_A => N2_B + N2 # Reaction 5
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.9e-15*sqrt(T/300))
+  energyExchange: {type: ratios, R: [0.7, 0.3, 0.0]} 
+
+- equation: 2 N2_A => N2_C + N2 # Reaction 6
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.6e-16*sqrt(T/300))
+  energyExchange: {type: ratios, R: [0, 1.0, 0.0]} 
+
+- equation: ele + N4p => N2_A + N2 # Reaction 7
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: (0.5*0.02*1.4e-12*(300.0/Te)**0.41)
+  newAttribute: (0.02*1.4e-12*(300.0/Te)**0.41)
+
+- equation: ele + N4p => N2_B + N2 # Reaction 8
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: (0.5*0.87*1.4e-12*(300.0/Te)**0.41)
+  newAttribute: (0.87*1.4e-12*(300.0/Te)**0.41)
+
+- equation: ele + N4p => N2_C + N2  # Reaction 9
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: (0.5*0.11*1.4e-12*(300.0/Te)**0.41)
+  newAttribute: (0.11*1.4e-12*(300.0/Te)**0.41)
+
+- equation: 2 ele + N4p => ele + 2 N2 # Reaction 10
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (7.0e-32*(300/Te)**4.5)
+  energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+
+- equation: ele + N3p => N + N2 # Reaction 11
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.0e-13*sqrt(300/Te))
+
+- equation: ele + N2p => 2 N # Reaction 12
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.8e-13*(300.0/Te)**0.39)
+  energyExchange: {type: valueseV, val: [-3.5, 0.0, 0.0], fix: False}
+  # energyExchange: {type: zero}
+
+- equation: ele + N2p => N2 # Reaction 13
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (4.0e-18*(300/Te)**0.7)
+  energyExchange: {type: zero}
+
+- equation: ele + N2p + N2 => 2 N2 # Reaction 14
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.0e-39*(300/Te)**1.5)
+
+
+- equation: 2 ele + N2p => ele + N2 # Reaction 15
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.0e-31*(300/Te)**4.5)
+  energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} 
+
+- equation: ele + N2 => 2 ele + N2p # Reaction 16
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (5.05e-17*(sqrt(Te) + 1.1e-5*Te**1.5))/exp(182000.0/Te)
+
+- equation: ele + Np => N # Reaction 17
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (3.5e-18*(300/Te)**0.7)
+  energyExchange: {type: zero}
+
+- equation: ele + Np + N2 => N + N2 # Reaction 18
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.0e-39*(300/Te)**1.5)
+
+- equation: 2 ele + Np => ele + N # Reaction 19
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.0e-31*(300/Te)**4.5)
+  energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} 
+
+- equation:  N3p + N2_A => Np + 2 N2 # Reaction 20
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.0e-16)
+
+- equation: N2p + N2_A => N3p + N # Reaction 21
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (3.0e-16)
+
+- equation: N2p + N2_A => Np + N + N2 # Reaction 22
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (4.0e-16)
+
+- equation: N2_A + N2 => 2 N2 # Reaction 23
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.0e-23)
+
+- equation: N + N2_A => N + N2 # Reaction 24
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.2e-17*(300/T)**0.666666666666667)
+
+- equation: N2_B + N2 => N2_A + N2 # Reaction 25
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.2e-17)
+  energyExchange: {type: ratios, R: [0, 1.0, 0.0]} 
+
+- equation:  N2_C + N2 => N2_B + N2  # Reaction 26
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.2e-17*(300/T)**0.33)
+  energyExchange: {type: ratios, R: [0, 1.0, 0.0]} 
+
+- equation: N4p + N2 => N2p + 2 N2 # Reaction 27
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.1e-22*exp(T/121))
+
+
+- equation: N4p + N => Np + 2 N2  # Reaction 28
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.0e-17)
+
+- equation: N4p + N => N3p + N2 # Reaction 29
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.0e-15)
+
+- equation: N3p + N => N2p + N2 # Reaction 30
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.6e-17)
+
+- equation: N3p + N2 => Np + 2 N2 # Reaction 31
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (6.0e-16)
+
+- equation: N2p + N2 => Np + N + N2 # Reaction 32
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.2e-17)
+
+- equation: N2p + N2 => N3p + N # Reaction 33
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (5.5e-18)
+
+- equation: N2p + N => Np + N2 # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (7.2e-19*exp(300/T))
+
+- equation: N2p + 2 N2 => N4p + N2 # Reaction 35 : Cluster ion formation , This is actually a two body reaction and not a third body reaction, need to update this
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (5e-41*(300/T)**1.64)
+  # energyExchange: {type: zero}
+
+- equation: N2p + N + N2 => N3p + N2 # Reaction 36
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (9.0e-42*exp(400/T))
+  # energyExchange: {type: zero}
+
+- equation: Np + N2 => N2p + N # Reaction 37
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.0e-19)
+
+- equation: Np + 2 N2 => N3p + N2 # Reaction 38
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (2.0e-41*(300/T)**2.0)
+
+- equation: Np + N + N2 => N2p + N2 # Reaction 39
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: (1.0e-41*(300/T))
+
+- equation: ele + N2 => ele + 2 N # Reaction 40
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: (1.2e+19/((6.022e+23*Te**1.6)))*exp(-113200/Te)
+  # 4.95e-8*(Te/6000.0)**0.388*np.exp(-113729.0/Te) cm^3/s
+  newAttribute: (1.0e-6*4.95e-8*(Te/6000.0)**0.388*exp(-113729.0/Te))   # park
+  energyExchange: {type: valueseV, val: [-1.0, 0.0, 0.0], fix: False}
+  # energyExchange: {type: valueseV, val: [-1.0, 0.0, 0.0], fix: True}
+
+# - equation: ele + N2 => ele + N2 # Reaction 41
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   duplicate: True
+#   newAttribute: (8.25e-14)
+
+# - equation: ele + N2 => ele + N2 # Reaction 42
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   duplicate: True
+#   newAttribute: (8.45e-15)
+
+# - equation: ele + N2 => ele + N2 # Reaction 43
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   duplicate: True 
+#   newAttribute: (2.69e-17)
+
+- equation: ele + N2 => ele + N2_A # Reaction 44
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-24.62, -3.201, -54.41, 84.72, -55.07]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,6.17],fix: True}   # +6.17 eV is the excitation energy required from electrons
+
+- equation: ele + N2_A => ele + N2 # Reaction 45: v : 0-4
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True 
+  newAttribute: {unit: m, Bolsig: [-36.53, 0.4430, -0.9333, 0.1975, -0.1179E-01]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,-6.17],fix: True}
+
+- equation: ele + N2 => ele + N2_A  # Reaction 46 : v = 5-9
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-22.83, -3.286, -56.28, 87.69, -56.95]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,7.0],fix: True}
+  
+
+- equation: ele + N2_A => ele + N2 # Reaction 47
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-34.60, 0.2789, -1.035, 0.2008, -0.1158E-01]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,-7.0],fix: True}
+
+- equation: ele + N2 => ele + N2_B # Reaction 48
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-20.25, -3.846, -58.44, 89.11, -57.33]}
+
+- equation: ele + N2_B => ele + N2 # Reaction 49
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-32.76, -0.6230E-01, -0.9100, 0.1488, -0.8068E-02]}
+  energyExchange: {type: ratios, R: [0.0,0.0,1.0]} # superelastic collision
+
+- equation: ele + N2 => ele + N2_A # Reaction 50
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-22.16, -3.462, -59.72, 92.99, -60.27]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,7.8],fix: True}  # fix true is not overwritten by default algorithm ( default tries to balance the energy)
+
+- equation: ele + N2_A => ele + N2 # Reaction 51
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-34.23, 0.1644, -1.304, 0.2360, -0.1320E-01]}
+  energyExchange: {type: valueseV, val: [0.0,0.0,-7.8],fix: True}   # superelastic collision
+
+- equation: ele + N2 => ele + N2_C # Reaction 52
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-14.24, -5.166, -83.42, 127.1, -80.94]}
+
+- equation: ele + N2_C => ele + N2 # Reaction 53
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  duplicate: True
+  newAttribute: {unit: m, Bolsig: [-30.64, -0.3308, -2.036, 0.3760, -0.2144E-01]}
+  energyExchange: {type: ratios, R: [0.0,0.0,1.0]} # superelastic collision, hNet*ratio goes to the heat of reaction of individual mode
+
+
+#### EXTRA ADDITION FROM PURE NIROGEN REACTIONS ####---------------------------------------------
+# reactions with N2(ap)
+- equation: N2 + N2_ap => N2_B + N2 # Reaction 53
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.8e-13)}
+
+- equation: O2 + N2_ap => O + O_D + N2 # Reaction 53
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.8e-11)}
+
+  # -30.92     -0.9741      -26.67       32.07      -21.76
+- equation: ele + N2 => N2_ap + ele # 8.4 eV, Bolsig
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, Bolsig: [-30.92, -0.9741, -26.67, 32.07, -21.76]}
+
+# ## Now Start including other reactions after addition of O2
+# ##----------------------------------------------
+# # IONIZATION REACTIONS
+# ##----------------------------------------------
+- equation: ele + O2 => O2p + 2 ele 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, Bolsig: [-27.14, -0.6358, -59.16, 94.00, -61.56]}
+  # -27.14     -0.6358      -59.16       94.00      -61.56
+
+# Associative ionizations -- N2_ap
+- equation: N2_A + N2_ap => N4p +  ele 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (5.0e-11)}
+- equation: N2_ap + N2_ap => N4p +  ele 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-10)}
+
+##----------------------------------------------
+# BULK RECOMBINATION REACTIONS
+##----------------------------------------------
+- equation: O2p + ele => O + O  # Shnider, Tailoring
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: {unit: m, K: (1.95e-13*(300.0/Te))}
+  newAttribute: {unit: m, K: (1.95e-13*(300.0/Te)**0.7)}
+
+- equation: O4p + ele => O2 + O2  # Shnider, Tailoring
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: {unit: m, K: (1.4e-12*(300.0/Te)**0.5)}
+  newAttribute: {unit: m, K: (4.2e-12*(300.0/Te)**0.5)}
+  energyExchange: {type: valueseV, val: [-4.6, 0.0, 0.0], fix: true}
+
+- equation: NOp + ele => N + O  # Shnider, Tailoring
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, K: (4.0e-13*(300.0/Te)**1.5)}
+
+- equation: 2 ele + O2p => O + O + ele # Aleksandrov 2013 -- found more O dissociation so O + O instead of O2
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-19*(Te/300.0)**(-4.5))}
+  energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+# - equation: 2 ele + O2p => O2 + ele # Aleksandrov 2013 - alternative
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (2.0e-19*(Te/300.0)**(-4.5))}
+#   energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+- equation: 2 ele + Op => O  + ele # adamovich : 3 body recombination 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.4e-8*Te**(-4.5))}
+  energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+- equation: ele + O2p + O2 => O2 + O2   #adamovich : 3 body recombination
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.1e-23*(Te)**(-1.5))}
+- equation: ele + O2p + N2 => O2 + N2   #adamovich : 3 body recombination
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.1e-23*(Te)**(-1.5))}
+- equation: ele + N2p + O2 => N2 + O2   #adamovich : 3 body recombination
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.1e-23*(Te)**(-1.5))}
+# - equation: ele + N2p + N2 => N2 + N2   #adamovich : 3 body recombination , already in N2plasma
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+# newAttribute: {unit: cm, K: (3.1e-23*(Te)**(-1.5))}
+- equation: ele + Op + N2 => O + N2 # adamovich : 3 body recombination; adamovich
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.1e-23*Te**(-1.5))}
+- equation: ele + Op + O2 => O + O2 # adamovich : 3 body recombination; adamovich
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.1e-23*Te**(-1.5))}
+
+
+
+
+
+##----------------------------------------------
+# ATTACHMENT REACTIONS - Units : m
+##----------------------------------------------
+- equation: ele + 2 O2 => O2m + O2  # Shnider
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, K: 1.4e-41 * (300/Te) * exp(-600/T) * exp(700*(Te - T)/(Te*T))}
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy
+
+- equation: ele + O2 + N2 => O2m + N2  # Shnider 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, K: 1.07e-43 * (300/Te) * exp(-70/T) * exp(1500*(Te - T)/(Te*T))}
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy
+
+- equation: ele + O + O2 => O2m + O  # Reaction 3
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-43
+- equation: ele + O + O2 => Om + O2  # Reaction 4
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-43
+
+- equation: ele + O3 => O + O2m  # Reaction 5
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: 1.0e-15*(Te/11600.0)**1.46
+  newAttribute: {unit: cm, K: 1.92e-9 * (Te/11600)**(-1.5)*exp(-1.3*11600/Te)}
+  # energyExchange: {type: zero}
+
+- equation: ele + O3 => Om + O2  # Reaction 6
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  # newAttribute: 1.0e-17*(Te/11600.0)**1.46
+  newAttribute: {unit: cm, K: 5.87e-9 * (Te/11600)**(-1.5)*exp(-1.59*11600/Te)}
+  # energyExchange: {type: zero}
+
+# - equation: ele + O2 => Om + O  # Raizer - p64 ~ 3 eV energy , need to interpolate
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.0e-12)}
+#   # energyExchange: {type: zero} 
+# # note: dissociation is not possible at low energies e + O2 => O + O2m
+
+
+##----------------------------------------------
+# DETACHMENT REACTIONS : m
+##----------------------------------------------
+- equation: O2m + N2 => O2 + N2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.9e-12 * (T/300)**0.5 * exp(-4990.0/ T)
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy ?
+  # energyExchange: {type: zero}
+
+- equation: O2m + O2 => O2 + O2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.7e-10 * (T/300)**0.5 * exp(-5590.0/ T)
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy ?
+  # energyExchange: {type: zero}
+
+- equation: O2m + N2_A => O2 + N2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.1e-9
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+
+- equation: O2m + N2_B => O2 + N2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.5e-9
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+
+- equation: Om + N2_A => O + N2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.2e-9
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+
+- equation: Om + N2_B => O + N2 + ele  # Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.9e-9
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy as it is the third body
+
+- equation: O2m + O => O3 + ele  # Reaction 14 - detachment opposite of attachment, energy exchange ?
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.5e-10
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy assumed only as it is opposite of attachment
+
+# - equation: Om + O => O2 + ele  # Kossyi - reverse of Raizers attachment e + O2 => O + O2m
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: 1.0E-6 * 5.0e-10
+#   energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy assumed only as it is opposite of attachment
+
+- equation: Om + N => NO + ele  # Reaction 16
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.6e-10
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy assumed only as it is opposite of attachment
+
+- equation: Om + O2 => O3 + ele  # Reaction 17
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 5.0e-15
+  # energyExchange: {type: ratios, R: [0.0, 0.0, 1.0]} # electron gains energy assumed only as it is opposite of attachment
+## Note: In presence of photons : O2m + hnu => e + O2  ; Not included here
+
+##----------------------------------------------
+# ELECTRONIC RELAXATION/QUENCHING REACTIONS
+# Main resource here are Popov and Adamovich ; detailed excited species in Popov are reduced and included in Adamovich
+# ##----------------------------------------------
+### N2(A)
+- equation: N2_A + O2 => N2 + 2 O #  Popov - R1; Adamovich - R18 ( vibrationally excites N2)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.7e-12)}
+- equation: N2_A + O2 => N2 + O2 #  Popov - R2; Adamovich - R19 ( vibrationally excites N2)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.5e-13)}
+- equation: N2_A + O => N2 + O_D #  Popov - R5; Bak ( vibrationally excites N2) , we didnt include O(S) , Adamovich - R20 assumes produces O(D)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.0e-11)}
+- equation: N2_A + NO => N2 + NO #  Popov - R5; Bak ( vibrationally excites N2) , we didnt include O(S) , Adamovich - R20 assumes produces O(D)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.1e-11)}
+- equation: N2_A + O => NO + N #  Kyossi and Bak 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.0e-12)}
+### N2(B)
+- equation: N2_B + O2 => N2 + 2 O #  Popov - R6; Adamovich - R25 ( vibrationally excites N2)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.0e-10)}
+- equation: N2_B + NO => N2_A + NO #  Kossyi
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.4e-10)}
+# # The following two reactions are a little different from Popov and Adamovich // use one ??
+- equation: N2_C + O2 => N2 + O + O_D #  Popov - R6 , energy released
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.5e-10)}
+# - equation: N2_C + O2 => N2_A + 2 O #   Adamovich  ( vibrationally excites N2)
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.0e-10)}
+
+# reactions remained for excited atoms still - adamovich and bak and kossyi
+- equation: O_D + O2 => O + O2 #  Adamovich - R32 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (4.0e-11)}
+- equation: O_D + N2 => O + N2 #  Adamovich - R31 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.6e-11)}
+
+
+# ##----------------------------------------------
+# # ION CONVERSION REACTIONS
+# ##----------------------------------------------
+- equation: O2m + O => O2 + Om # Reaction 
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 3.3e-10
+
+- equation: Om + O2 => O2m + O # Kossyi, actually for excited O2(a)
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.0e-10
+
+
+- equation: N4p + O2 => O2p + N2 + N2  # Reaction 17
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.5e-10
+- equation: N2p + O2 => O2p + N2  # Reaction 17
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0E-6 * 6.0e-11
+
+ ### Cluster ion formation 
+- equation: O2p + O2 + O2 => O4p + O2  # cluster ion formation
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.4e-30*(300.0/T)**(3.2))}
+- equation: O2p + O2 + N2 => O4p + N2  # cluster ion formation
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.3e-35*T**(-3.2))}    ## Papeer
+- equation: N2p + N2 + O2 => N4p + O2  # cluster ion formation / check should be binary reaction at these pressures
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (5.0e-29)}
+# - equation: N2p + N2 + N2 => N4p + N2  # should be presnet in N2-plasma already - check
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: 1.0E-6 * 5.0e-29
+
+
+- equation: O4p + N2 => O2p + O2 + N2 # opposite to Papeer -- check if this exists
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, K: (3.3e-12*(300.0/T)**(4.0)*exp(-5030.0/T))}
+- equation: O4p + O2 => O2p + O2 + O2 # Reaction 17
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: m, K: (3.3e-12*(300.0/T)**(4.0)*exp(-5030.0/T))}
+
+
+
+- equation: Op + N + O2  => NOp + O2  # Reaction 18 M
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-41
+- equation: Op + N + N2 => NOp + N2  # Reaction 18 M
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-41
+- equation: Np + O2 => O2p + N  # Reaction 19
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 2.8e-16
+- equation: Np + O2 => NOp + O  # Reaction 20
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 2.5e-16
+- equation: Np + O => N + Op  # Reaction 21
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1e-18  
+- equation: Np + O3 => NOp + O2  # Reaction 22
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 5.0e-16
+- equation: Np + NO => N + NOp  # Reaction 23
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 8.0e-16
+- equation: Np + NO => N2p + O  # Reaction 24
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 3.0e-18
+- equation: Np + NO => Op + N2  # Reaction 25
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-18
+- equation: Op + N2 => NOp + N  # Reaction 26
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 3.0e-18 * exp(-0.00311 *T)
+
+- equation: N2p + O => NOp + N  # Reaction 28
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.3e-10 * (300 / T)**0.5
+- equation: N2p + O => Op + N2  # Reaction 29
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-17 * (300 / T)**0.2
+- equation: N2p + O3 => O2p + O + N2  # Shnider Not balanced RHS had N
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-16
+- equation: N2p + NO => NOp + N2  # Reaction 31
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 3.3e-16
+- equation: O2p + N2 => NOp + NO  # Reaction 32
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-23
+- equation: O2p + N => NOp + O  # Reaction 33
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.2e-16
+- equation: O2p + NO => NOp + O2  # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 4.4e-16
+- equation: N4p + O => Op + N2 + N2  # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 2.5e-16
+# - equation: N4p + N => Np + N2 + N2  # Already in N2-plasma
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+  # newAttribute: 1.0e-17
+- equation: N4p + NO => NOp + N2 + N2  # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 4.0e-16
+- equation: O4p + O => O2p + O3  # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 3.0e-16
+- equation: O4p + NO => NOp + O2 + O2 # Reaction 34
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: 1.0e-16
+
+
+
+##----------------------------------------------
+# ION-ION RECOMBINATION REACTIONS
+##----------------------------------------------
+# Check this and which to take ?
+# These reactions are known to depend on pressure and at ~ 1atm should be three body dominant - Raizer
+- equation: O2m + O2p + O2  => 2 O + 2 O2  # popov dissociates , bak-R49 does not
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-12 * 2.0e-25 * (300/T)**2.5
+- equation: O2m + O2p + N2  => 2 O +  O2 + N2  # with another collison partner N2, not shown by Popov
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-12 * 2.0e-25 * (300/T)**2.5
+
+- equation: O2m + O4p + O2  => 2 O + 3 O2  # popov 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-12 * 2.0e-25 * (300/T)**2.5
+
+# - equation: O2m + O2p + O2  => O2 + 2 O2  # bak-R49 does not dissociate
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0E-12 * 2.0e-25 * (300/T)**2.5
+# - equation: O2m + O2p + N2  => 2 O2 + N2  # with another collison partner N2
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0E-12 * 2.0e-25 * (300/T)**2.5
+
+# # # From shnider 2-body, but at 1atm should be 3-body dominant
+# # Assume ambient density of 1.2 kg/m3 same. if pressure decreases then change this
+# - equation: O2m + O2p => O2 + O2 # Reaction 34
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 2.2e-12
+#   # newAttribute: 2.2e-12*(rho/rho0)**1.5
+
+# - equation: O2m + N2p => O2 + N2 # Reaction 34
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 2.2e-12
+#   # newAttribute: 2.2e-12*(rho/rho0)**1.2
+
+
+## A lot of three body ion recombination reactions of NO+ are missing and required
+
+# ## Reactions from Koyssi:
+### A+ + B- + M -> A + B + M
+## A = O2, O ; B = N2, O2, N, O, NO, M = N2, O2; rate = 2.0e-25*(300.0/T)**2.5 in cm
+- equation: O2m + N2p + N2 => O2 + N2 + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + N2p + O2 => O2 + N2 + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + O2p + N2 => O2 + O2 + N2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + O2p + O2 => O2 + O2 + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + Np + N2 => O2 + N + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + Np + O2 => O2 + N + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + Op + N2 => O2 + O + N2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + Op + O2 => O2 + O + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + NOp + N2 => O2 + NO + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: O2m + NOp + O2 => O2 + NO + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+
+# same with initial being Om
+- equation: Om + N2p + N2 => O + N2 + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + N2p + O2 => O + N2 + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + O2p + N2 => O + O2 + N2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + O2p + O2 => O + O2 + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Np + N2 => O + N + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Np + O2 => O + N + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Op + N2 => O + O + N2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Op + O2 => O + O + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + NOp + N2 => O + NO + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + NOp + O2 => O + NO + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+
+# ## Reactions from Koyssi:
+### A+ + B- + M -> AB + M
+### rate = 2.0e-25*(300.0/T)**2.5 in cm
+### M = N2, O2;
+## A = O; B = N, O;
+- equation: Om + Np + N2 => NO + N2  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Np + O2 => NO + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Op + N2 => O2 + N2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+- equation: Om + Op + O2 => O2 + O2
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (2.0e-25*(300.0/T)**2.5)}
+
+
+
+
+##----------------------------------------------
+# NEUTRAL SPECIES REACTIONS
+##----------------------------------------------
+- equation: N + O2  => NO + O  # Reaction 18  # Assuming T > 300 [K]
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.1e-14*T*exp(-3150.0/T)
+
+
+
+- equation: N + O3 => NO + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.0e-16
+
+- equation: N + NO  => N2 + O  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * 1.05e-12 * (T)**0.5
+
+- equation: O + O3  => O2 + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * 2.0e-11 * exp(-2300.0/T)
+  
+# - equation: O + O + N2  => N2_A + N2  # Reaction 18 
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0E-12 * 8.76e-34 * exp(500/T)
+
+# - equation: N + N + N2  => N2_A + N2  # Reaction 18 
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0E-12 * 8.76e-34 * exp(500/T)
+
+- equation: N + N + O2  => N2_A + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 0.5*1.0E-12 * 8.76e-34 * exp(500/T)
+
+- equation: N + N + O2  => N2 + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 0.5*1.0E-12 * 8.76e-34 * exp(500/T)
+
+# # Note: different excited states
+# - equation: O + O + N2  => N2 + O2  # Reaction 18 
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0E-12 * 8.76e-34 * exp(500/T)
+
+- equation: O + O + N2  => O2 + N2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-12 * 2.76e-34 * exp(720.0/T)
+
+- equation: O + O + O2  => O2 + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-12 * 2.45e-31 * (T)**(-0.63)
+
+- equation: O + O2 + N2  => O3 + N2  #  
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: 5.6e-29*T**(-2.0)}
+
+- equation: O + O2 + O2  => O3 + O2  # Reaction 18 
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: 8.6e-31*T**(-1.25)}
+
+
+# [TH2] Check below for reference
+- equation: N2 + O  => NO + N  # Reaction 18  # Assuming T > 300 [K]
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * (6.75e13/6.022e23)*T**(-1.0)*exp(-3.75e4/T)
+- equation: NO + O  => N + O2  # Reaction 18  # Assuming T > 300 [K]
+  rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: 1.0E-6 * (3.18e9/6.022e23)*T*exp(-1.97e4/T)
+
+
+
+
+# ## N2_ap rxn
+# - equation: N2_ap + NO => N2 + N + O  # Bak 
+#   rate-constant: {A: 0.0498, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: 1.0e-6*3.6e-10
+
+# ##----------------------------------------------
+# # ELECTRON IMPACT DISSOCIATION REACTIONS
+# ##----------------------------------------------
+# - equation: ele + O2 => O + O + ele # kossyi -- here taken at a Te value - check
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: {unit: cm, K: exp(-7.9-13.4/(43.87*1.0e-17))}
+#   energyExchange: {type: valueseV, val: [-0.78,0.0,0.0],fix: false}
+
+# - equation: ele + O2 => O + O_D + ele # kossyi -- here taken at a Te value
+#   rate-constant: {A: 0, b: 0, Ea: 1}
+#   type: elementary
+#   newAttribute: {unit: cm, K: exp(-8.0-16.9/(43.87*1.0e-17))}
+#   energyExchange: {type: valueseV, val: [-1.26,0.0,0.0],fix: false}
+
+## Based on Adamovich and using the reduced electric field
+# Y = 0.1278976*(1.5*Te/11600)**2+2.4793497*(1.5*Te/11600)**(1.178222) = in 10s of Td already now
+# K = 10**(A + B/Y) units in cm3/s
+# -8.31, -8.40 (-8.63, 7.10)
+# -7.86, -17.2 (-7.42, -37.1)
+- equation: ele + O2 => O + O + ele # kossyi -- here taken at a Te value - check
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (10.0**(-8.31-8.40/(0.1278976*(1.5*Te/11600)**2+2.4793497*(1.5*Te/11600)**(1.178222))))}
+  energyExchange: {type: valueseV, val: [-0.78,0.0,0.0],fix: false}
+
+- equation: ele + O2 => O + O_D + ele # kossyi -- here taken at a Te value
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (10.0**(-7.86-17.2/(0.1278976*(1.5*Te/11600)**2+2.4793497*(1.5*Te/11600)**(1.178222))))}
+  energyExchange: {type: valueseV, val: [-1.26,0.0,0.0],fix: false}
+
+
+# '''
+# Thermal Processes : Associative ionization and thermal dissociation ( close to breakdown -- hypersonics)
+# Needed for both N2 and O2 and also for NO, include only major processes that consume/release energy and have high rates
+#   [TH1] Modification of chemical-kinetic parameters for 11-air species in re-entry flows - ScienceDirect. Accessed February 15, 2024. https://www.sciencedirect.com/science/article/pii/S0017931021000533?via%3Dihub
+#   [TH2] Niu Q, Yuan Z, Dong S, Tan H. Assessment of nonequilibrium air-chemistry models on species formation in hypersonic shock layer. International Journal of Heat and Mass Transfer. 2018;127:703-716. doi:10.1016/j.ijheatmasstransfer.2018.07.007
+# '''
+
+## DISSOCIATION REACTIONS
+# N2
+- equation: N2 + N2 => N + N + N2  # Reaction with M = N2
+  rate-constant: {A: 1.216e20, b: -1.214, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.216e20 / 6.022e23) * (sqrt(T * Tv)**(-1.214)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+ # include some recombination rates, this is oerestimated at low temperautres so need to use a different rate
+ # this is fitted for both low and high: (1.0e12*8.27e-46*sp.exp(500.0/T)*sp.exp(-(T/10000)**1.54)) cm
+- equation: N + N + N2 => N2 + N2  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (1.216e20 / 6.022e23) * (sqrt(T * Tv)**(-1.214)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  # newAttribute: {unit: cm, K: minimum(7.09111242327394e-37*exp(-0.0002491*T - 113200/sqrt(T*Tv) + 116900.0/T - 592100.0/T**2)/((T*Tv)**0.607*(1/T)**2.091), 8.27e-34*exp(500.0/T))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+  # newAttribute: {unit: cm, K: 1.0e-33}
+
+
+- equation: N2 + O2 => N + N + O2  # Reaction with M = O2
+  rate-constant: {A: 7.0e21, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+#  # include some recombination rates already included
+# - equation: N + N + O2 => N2 + O2  # Reaction with M = N2
+#   rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+#   type: elementary
+#   # newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+#   newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + NO => N + N + NO  # Reaction with M = NO
+  rate-constant: {A: 7.0e21, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+ # include some recombination rates
+- equation: N + N + NO => N2 + NO  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + N => N + N + N  # Reaction with M = N
+  rate-constant: {A: 3.591e20, b: -1.226, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.591e20 / 6.022e23) * (sqrt(T * Tv)**(-1.226)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+  # include some recombination rates
+- equation: N + N + N => N2 + N  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (3.591e20 / 6.022e23) * (sqrt(T * Tv)**(-1.226)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + O => N + N + O  # Reaction with M = O
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.0e22 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+  # include some recombination rates
+- equation: N + N + O => N2 + O  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (3.0e22 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + N2p => N + N + N2p  # Reaction with M = N+2
+  rate-constant: {A: 1.216e20, b: -1.214, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.216e20 / 6.022e23) * (sqrt(T * Tv)**(-1.214)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+  # include some recombination rates
+- equation: N + N + N2p => N2 + N2p  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (1.216e20 / 6.022e23) * (sqrt(T * Tv)**(-1.214)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + O2p => N + N + O2p  # Reaction with M = O+2
+  rate-constant: {A: 7.0e21, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+  # include some recombination rates
+- equation: N + N + O2p => N2 + O2p  # Reaction with M = N2
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  # newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+  newAttribute: {unit: cm, K: 1.0e12*8.27e-46*exp(500.0/T)*exp(-(T/10000)**1.54)}
+
+- equation: N2 + NOp => N + N + NOp  # Reaction with M = NO+
+  rate-constant: {A: 7.0e21, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+#   # include some recombination rates
+# - equation: N + N + NOp => N2 + NOp  # Reaction with M = N2
+#   rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (7.0e21 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+
+- equation: N2 + Np => N + N + Np  # Reaction with M = N+
+  rate-constant: {A: 3.591e20, b: -1.226, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.591e20 / 6.022e23) * (sqrt(T * Tv)**(-1.226)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+#   # include some recombination rates
+# - equation: N + N + Np => N2 + Np  # Reaction with M = N2
+#   rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.591e20 / 6.022e23) * (sqrt(T * Tv)**(-1.226)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+
+- equation: N2 + Op => N + N + Op  # Reaction with M = O+
+  rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.0e22 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))}
+  energyExchange: {type: ratios, R: [0.5, 0.5, 0.0]} 
+
+#   # include some recombination rates
+# - equation: N + N + Op => N2 + Op  # Reaction with M = N2
+#   rate-constant: {A: 3.0e22, b: -1.6, Ea: 113200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.0e22 / 6.022e23) * (sqrt(T * Tv)**(-1.6)) * exp(-113200 / (sqrt(T * Tv)))/(6.022e23*exp((2.491E+00 / (10000/T)) + 7.155E-01 + 2.091E+00 * log(10000/T) - 1.169E+01 * (10000/T) + 5.921E-03 * (10000/T)**2))}
+
+# O2
+- equation: O2 + N2 => O + O + N2  # Reaction with M = N2
+  rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)}
+
+#   # include some recombination rates # included already
+# - equation: O + O + N2 => N2 + O2  # Reaction with M = N2
+#   rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+
+- equation: O2 + O2 => O + O + O2  # Reaction with M = O2
+  rate-constant: {A: 1.117e25, b: -2.585, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.117e25 / 6.022e23) * T**(-2.585) * exp(-59500 / T)}
+
+#   # include some recombination rates # included already
+# - equation: O + O + O2 => O2 + O2  # Reaction with M = O2
+#   rate-constant: {A: 1.117e25, b: -2.585, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.117e25 / 6.022e23) * T**(-2.585) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + NO => O + O + NO  # Reaction with M = NO
+  rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)}
+
+  # include some recombination rates
+- equation: O + O + NO => NO + O2  # Reaction with M = NO
+  rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + N => O + O + N  # Reaction with M = N
+  rate-constant: {A: 1.000e22, b: -1.500, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.000e22 / 6.022e23) * T**(-1.500) * exp(-59500 / T)}
+
+#   # include some recombination rates already included
+# - equation: O + O + N => N2 + O  # Reaction with M = N
+#   rate-constant: {A: 1.000e22, b: -1.500, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.000e22 / 6.022e23) * T**(-1.500) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + O => O + O + O  # Reaction with M = O
+  rate-constant: {A: 3.000e21, b: -1.500, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.000e21 / 6.022e23) * T**(-1.500) * exp(-59500 / T)}
+
+  # include some recombination rates
+- equation: O + O + O => O2 + O  # Reaction with M = O
+  rate-constant: {A: 3.000e21, b: -1.500, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.000e21 / 6.022e23) * T**(-1.500) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + N2p => O + O + N2p  # Reaction with M = N+2
+  rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)}
+
+#   # include some recombination rates
+# - equation: O + O + N2p => N2p + O2  # Reaction with M = N+2
+#   rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + O2p => O + O + O2p  # Reaction with M = O+2
+  rate-constant: {A: 1.117e25, b: -2.585, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.117e25 / 6.022e23) * T**(-2.585) * exp(-59500 / T)}
+
+#   # include some recombination rates
+# - equation: O + O + O2p => O2 + O2p  # Reaction with M = O+2 
+#   rate-constant: {A: 1.117e25, b: -2.585, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.117e25 / 6.022e23) * T**(-2.585) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + NOp => O + O + NOp  # Reaction with M = NO+
+  rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)}
+
+#   # include some recombination rates
+# - equation: O + O + NOp => NOp + O2  # Reaction with M = NO+
+#   rate-constant: {A: 3.354e15, b: -0.2726, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.354e15 / 6.022e23) * T**(-0.2726) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+
+- equation: O2 + Np => O + O + Np  # Reaction with M = N+
+  rate-constant: {A: 1.000e22, b: -1.500, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.000e22 / 6.022e23) * T**(-1.500) * exp(-59500 / T)}
+
+#   # include some recombination rates
+# - equation: O + O + Np => Np + O2  # Reaction with M = N+
+#   rate-constant: {A: 1.000e22, b: -1.500, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.000e22 / 6.022e23) * T**(-1.500) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+- equation: O2 + Op => O + O + Op  # Reaction with M = O+
+  rate-constant: {A: 3.000e21, b: -1.500, Ea: 59500}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.000e21 / 6.022e23) * T**(-1.500) * exp(-59500 / T)}
+
+#   # include some recombination rates
+# - equation: O + O + Op => Op + O2  # Reaction with M = O+
+#   rate-constant: {A: 3.000e21, b: -1.500, Ea: 59500}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (3.000e21 / 6.022e23) * T**(-1.500) * exp(-59500 / T)/(6.022e23*exp((1.567E+00 / (10000/T)) + 1.217E+00 + 1.909E+00 * log(10000/T) - 6.281E+00 * (10000/T) + 5.237E-03 * (10000/T)**2))}
+
+# NO
+- equation: NO + N2 => N + O + N2  # Reaction with M = N2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)}
+
+  # include some recombination rates
+- equation: N + O + N2 => NO + N2  # Reaction with M = N2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+
+
+- equation: NO + O2 => N + O + O2  # Reaction with M = O2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)}
+
+  # include some recombination rates
+- equation: N + O + O2 => NO + O2  # Reaction with M = O2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + NO => N + O + NO  # Reaction with M = NO
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+  # include some recombination rates
+- equation: N + O + NO => NO + NO  # Reaction with M = NO
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + N => N + O + N  # Reaction with M = N
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+  # include some recombination rates
+- equation: N + O + N => NO + N  # Reaction with M = N
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + O => N + O + O  # Reaction with M = O
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+  # include some recombination rates
+- equation: N + O + O => NO + O  # Reaction with M = O
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+
+- equation: NO + N2p => N + O + N2p  # Reaction with M = N+2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)}
+
+#   # include some recombination rates
+# - equation: N + O + N2p => NO + N2p  # Reaction with M = N+2
+#   rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + O2p => N + O + O2p  # Reaction with M = O+2
+  rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)}
+
+#   # include some recombination rates
+# - equation: N + O + O2p => NO + O2p  # Reaction with M = O+2
+#   rate-constant: {A: 1.450e15, b: 0.000, Ea: 75200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (1.450e15 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + NOp => N + O + NOp  # Reaction with M = NO+
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+#   # include some recombination rates
+# - equation: N + O + NOp => NO + NOp  # Reaction with M = NO+
+#   rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + Np => N + O + Np  # Reaction with M = N+
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+#   # include some recombination rates
+# - equation: N + O + Np => NO + Np  # Reaction with M = N+
+#   rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+- equation: NO + Op => N + O + Op  # Reaction with M = O+
+  rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)}
+
+#   # include some recombination rates
+# - equation: N + O + Op => NO + Op  # Reaction with M = O+
+#   rate-constant: {A: 9.640e14, b: 0.000, Ea: 75200}
+#   type: elementary
+#   newAttribute: {unit: cm, K: (9.640e14 / 6.022e23) * exp(-75200 / T)/(6.022e23*exp((2.093E+00 / (10000/T)) - 6.229E-01 + 2.028E+00 * log(10000/T) - 7.872E+00 * (10000/T) + 5.586E-03 * (10000/T)**2))}
+
+
+
+# Thermal Associative ionization / also remaining electron impact : Gupta 90, check [TH2]
+- equation: O2 + N2 => NO + NOp + ele  # Reaction
+  rate-constant: {A: 1.38e20, b: 1.84, Ea: 1.41e5}  # Rate Constant
+  type: elementary
+  newAttribute: {unit: cm, K: (1.38e20/6.022e23) * T**(-1.84) * exp(-1.41e5 / T)}  # Rate Expression
+
+- equation: N + N => N2p + ele  # Reaction
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.40e13/6.022e23) * exp(-6.78e4 / T)}  # Rate Expression
+
+- equation: O + O => O2p + ele  # Reaction
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.60e17/6.022e23) * exp(-8.08e4 / T)}  # Rate Expression  
+
+- equation: N + O => NOp + ele  # Reaction
+  rate-constant: {A: 9.03e9, b: 0, Ea: 3.24e4}
+  type: elementary
+  newAttribute: {unit: cm, K: (9.03e9/6.022e23)*T**(0.5) * exp(-3.24e4 / T)}  # Rate Expression
+
+- equation: ele + N => Np + 2 ele  # Reaction
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (1.10e32/6.022e23)*T**(-3.14) * exp(-1.69e5 / T)}  # Rate Expression  
+
+- equation: ele + O => Op + 2 ele  # Reaction
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  type: elementary
+  newAttribute: {unit: cm, K: (3.60e31/6.022e23)*T**(-2.91) * exp(-1.58e5 / T)}  # Rate Expression  
+
+

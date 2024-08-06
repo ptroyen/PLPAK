@@ -1,0 +1,14 @@
+setup.py
+./plpak/__init__.py
+./plpak/extraModels.py
+./plpak/funcRxns.py
+./plpak/integrator.py
+./plpak/makePlasmaKinetics.py
+./plpak/mecWrapper.py
+./plpak/plasmaKineticSystem.py
+./plpak/plasmaSystems.py
+plpak.egg-info/PKG-INFO
+plpak.egg-info/SOURCES.txt
+plpak.egg-info/dependency_links.txt
+plpak.egg-info/requires.txt
+plpak.egg-info/top_level.txt
