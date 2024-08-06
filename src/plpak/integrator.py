@@ -399,10 +399,12 @@ class Solution:
         # update the cycler
         # mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=colors)
 
-        import scienceplots
-        plt.style.use('science')
-        # plt.style.use(['science','ieee'])
-        plt.rcParams.update({'figure.dpi': '100'})
+        # import scienceplots
+        # plt.style.use('science')
+        # # plt.style.use(['science','ieee'])
+        # plt.rcParams.update({'figure.dpi': '100'})
+
+
         # colors = plt.cm.tab10(np.linspace(0,1,10))
         colors = plt.cm.tab20(np.linspace(0,1,15))
         custom_colors = [
@@ -576,10 +578,10 @@ class Solution:
         # # update the cycler
         # mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=colors)
 
-        import scienceplots
-        plt.style.use('science')
-        # plt.style.use(['science','ieee'])
-        plt.rcParams.update({'figure.dpi': '100'})
+        # import scienceplots
+        # plt.style.use('science')
+        # # plt.style.use(['science','ieee'])
+        # plt.rcParams.update({'figure.dpi': '100'})
 
 
 

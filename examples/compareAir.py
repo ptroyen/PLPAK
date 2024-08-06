@@ -33,10 +33,11 @@ def plotCompare(dfList, labels, refFiles, refLabels, refTimeScale, refValueScale
     import sys
 
     import matplotlib.pyplot as plt
-    import scienceplots
-    plt.style.use('science')
-    # plt.style.use(['science','ieee'])
-    plt.rcParams.update({'figure.dpi': '100'})
+
+    # import scienceplots
+    # plt.style.use('science')
+    # # plt.style.use(['science','ieee'])
+    # plt.rcParams.update({'figure.dpi': '100'})
 
     fmtsSave = ['png','pdf']
 

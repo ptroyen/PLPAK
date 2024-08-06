@@ -1306,10 +1306,12 @@ def plotTemporalScale(fname='solnPlasma',pids=None,**kwargs):
 
         import matplotlib as mpl
         import matplotlib.ticker
-        import scienceplots
-        plt.style.use('science')
-        # plt.style.use(['science','ieee'])
-        plt.rcParams.update({'figure.dpi': '100'})
+
+        # import scienceplots
+        # plt.style.use('science')
+        # # plt.style.use(['science','ieee'])
+        # plt.rcParams.update({'figure.dpi': '100'})
+
         ## the cycler repeats by default with just 4 line types. Improve this to 10
         from cycler import cycler
         # 4 colors from cmap

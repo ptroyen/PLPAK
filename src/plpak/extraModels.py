@@ -660,10 +660,11 @@ def testPhotoIonizePPT():
     # plot the results
     import matplotlib.pyplot as plt
     import matplotlib as mpl
-    import scienceplots
-    plt.style.use('science')
-    # plt.style.use(['science','ieee'])
-    plt.rcParams.update({'figure.dpi': '100'})
+    
+    # import scienceplots
+    # plt.style.use('science')
+    # # plt.style.use(['science','ieee'])
+    # plt.rcParams.update({'figure.dpi': '100'})
 
     fmts = ['png','pdf']
 
