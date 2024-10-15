@@ -7,7 +7,7 @@ PLPAK is a library built for zero-dimensional analysis of plasma-kinetic systems
 - Clone the repository or download the zip file.
 - Add path to the directory containing the package to the environment variable and import.
     ```python
-    dir_plpak = os.path.dirname("path_to\PLPAK")
+    dir_plpak = os.path.dirname("path_to\PLPAK\src\PLPAK\")
     sys.path.append(dir_plpak)
     import PLPAK as pl
     ```
