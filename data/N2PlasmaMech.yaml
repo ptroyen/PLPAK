@@ -1,5 +1,6 @@
 description: |-
   ""
+# Peters, C. J. (2019). Considerations for Femtosecond Laser Electronic Excitation Tagging in High-Speed Flows. https://ntrs.nasa.gov/citations/20190028876
 
 generator: cti2yaml
 cantera-version: 2.6.0
@@ -342,16 +343,11 @@ reactions:
   type: elementary
   newAttribute: (7.2e-19*exp(300/T))
 
-# Reaction 35 : Cluster ion formation , This is actually a two body saturated at higher pressure
-## for lower pressure still it is a three body reaction
-- equation: N2p + 2 N2 => N4p + N2 
+- equation: N2p + 2 N2 => N4p + N2 # Reaction 35 : Cluster ion formation
   rate-constant: {A: 0, b: 0, Ea: 1}
   type: elementary
-  # newAttribute: (5e-41*(300/T)**1.64)
-  newAttribute: {unit: cm , K: (1.0e-10*(8.16*exp(-T/224)+1.1*exp(-T/997))/2.4475e19)}
+  newAttribute: (5e-41*(300/T)**1.64)
   # energyExchange: {type: zero}
-
-  
 
 - equation: N2p + N + N2 => N3p + N2 # Reaction 36
   rate-constant: {A: 0, b: 0, Ea: 1}

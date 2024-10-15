@@ -278,8 +278,9 @@ def compareExperiments():
 
 # compare old and new N2 models
 def compareN2Models():
-    dflist = ["N2SolnsOld", "N2SolnsNew"]
-    refFiles = ["dataExp/papeerN21e21normalized.csv"]
+    # dflist = ["N2SolnsOld", "N2SolnsNew"]
+    dflist = ["testRunN2"]
+    refFiles = ["../data/dataExp/papeerN21e21normalized.csv"]
 
     # # include Shneider data
     # dflist = ["N2SolnsOld", "N2SolnsNew", "fracO2Change22p0O2_1e23"]
@@ -290,10 +291,10 @@ def compareN2Models():
     # csvDF = pd.read_csv("dataExp/shneiderAirDecay.csv",delimiter=',')
     # csvDF.to_csv("dataExp/shneiderAirDecay.csv",sep='\t',index=False)
 
-    refLabels = ["Papeer", "Shneider"]
+    refLabels = ["Papeer"]
     refTimeScale = [1.0, 1.0]
     refValueScale = [1.0e21, 1.0]
-    labels = ["Peters", "This work: $N_2$", "This work: Air"]
+    labels = ["This work: $N_2$-model", "This work: Air-model"]
     xScale = 'log'
     yScale = 'log'
 

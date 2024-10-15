@@ -185,7 +185,7 @@ def dYdt_all_base(t, Y, plasmaSys):
 
 
 
-def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/combinedAirMech.yaml",sp='N2',ne=1.0e23,**kwargs):
+def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/combinedAirMech.yaml",sp='N2',**kwargs):
     
 
     import matplotlib.pyplot as plt
@@ -237,6 +237,8 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     if sp == 'N2':
     # # Initial conditions For N2 mechanism  -----------------------------------------------------------------------
         # Species: [N, N2, N2_A, N2_B, N2_C, Np, N2p, N3p, N4p, ele]
+        # [N, N2, N2_A, N2_B, N2_C, Np, N2p, N3p, N4p, ele]
+       
         n0 = 2.45e25
         n0 = n0*300.0/760.0
         # nI = 1.00e23
@@ -244,12 +246,27 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         # nI = 5.00e22
 
         # for In when at 1 atm ne = 1.0e23
-        nI = 8.27070513237335e+22   # 300 torr
+        # nI = 8.27070513237335e+22   # 300 torr
+
+
+        # find Id of species for initial conditions:
+        idN2 = plasmaSys.gas.species_index('N2')
+        idN2p = plasmaSys.gas.species_index('N2p')
+        idele = plasmaSys.gas.species_index('ele')
+        # idO2 = plasmaSys.gas.species_index('O2')
+        # idO2p = plasmaSys.gas.species_index('O2p')
+        # idNO = plasmaSys.gas.species_index('NO')
+
+        Ysp0 = np.zeros(nSp)
 
 
         ne = nI
         n0 = n0 - nI
-        Ysp0 = np.array([0.0,n0,0,0,0,0,nI,0,0,ne])
+        # Ysp0 = np.array([0.0,n0,0,0,0,0,nI,0,0,ne])
+        Ysp0[idN2] = n0
+        Ysp0[idN2p] = nI
+        Ysp0[idele] = ne
+
     ##-----------------------------------------------------------------------------------------------------------------
     elif sp == 'Air':
     ##  For air mechanism -----------------------------------------------------------------------------------------------
@@ -421,9 +438,9 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         # nN2p = 5.0e23
         # nO2p = 0.0
 
-        # # # For ne = 1.4e22 ; Papeer
-        # nO2p = 0.0
-        # nN2p = 1.0e21   # papeer n2
+        # # For ne = 1.4e22 ; Papeer
+        nO2p = 0.0
+        nN2p = 1.0e21   # papeer n2
 
         # # For ne = 1.0e22 ; laux
         # nO2p = 7.2e21*0.001
@@ -756,7 +773,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # also plot papeer N2
         # refdata = np.loadtxt("airPlasma/papeerN214e21normalized.csv")
-        fload = os.path.join(dir_data_exp,"papeerN214e21normalized.csv")
+        fload = os.path.join(dir_data_exp,"papeerN21e21normalized.csv")
         refdata = np.loadtxt(fload)
         Npeak = 1.0e21 # reference values are normalized with this value
         reft = refdata[:,0]
@@ -892,13 +909,12 @@ if __name__ == "__main__":
     # fname = "airPlasmaSolnTemporal"
     # fname = "N2SolnsCheckN"
     # fname = "TestlowP"
-    fname="testRun"
+    # fname="testRunair"
+    fname="testRunN2"
 
-    # mechFile="mecFiles/AirPlasmaMech.yaml"
-    # mechFile="mecFiles/AirPlasmaMech_HighT.yaml"
-    # mechFile="mecFiles/AirPlasmaMech_HighT_Associon.yaml"
-    mechFile="../data/AirPlasmaMech_v2.yaml"
-    sp='Air'
+    # mechFile="../data/AirPlasmaMech_v2.yaml"
+    mechFile="../data/N2PlasmaMech.yaml"
+    sp='N2'
     # sp='N2combined'
 
     # mechFile="mecFiles/N2PlasmaMech.yaml"
@@ -909,7 +925,7 @@ if __name__ == "__main__":
     # mechFile="airPlasma/N2PlasmaMechAleks.yaml"
     # sp='N2Aleks'
 
-    directSolve(fname=fname,Te0=3.0*11600.0,dt=1.0e-6,mechFile=mechFile,sp=sp,ne=1.0e23)
+    directSolve(fname=fname,Te0=3.0*11600.0,dt=1.0e-6,mechFile=mechFile,sp=sp)
 
     #  # plot the solution object
     pvars = ['Ysp','Temp','Wrxn','Qmodes','dhrxn','Qdot']
