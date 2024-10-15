@@ -1,0 +1,8 @@
+# Ignore NPZ files
+*.npz
+
+# Ignore PDF files
+*.pdf
+
+# Python-specific ignores
+__pycache__/
