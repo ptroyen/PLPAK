@@ -24,7 +24,7 @@ For more details, see the **[src/readme.md](./src/readme.md)**.
 
 ### Test
 - Run the example/solveWithMech.py to run the simulation and save the data.
-- The comparison of simulated results against experiments of Paper
+- The comparison of simulated results against experiments of Papeer
 
     <img src="./examples/compModelsN2.png" alt="Comparison of Models" width="400"/>
 
