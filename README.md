@@ -46,3 +46,6 @@ For more details, see the **[src/readme.md](./src/readme.md)**.
     <img src="./examples/compModelsN2.png" alt="Comparison of Models" width="400"/>
 
     *Figure: Comparison of Models*
+
+#### Acknowledgements
+This work was supported by the Office of Naval Research under Grant No. N00014-22-1-2235
