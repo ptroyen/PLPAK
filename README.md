@@ -32,6 +32,10 @@ If you utilize the package in your research, please cite the following papers:
 # **[More Details](./src/readme.md)**
 For more details, see the **[src/readme.md](./src/readme.md)**.
 
+
+# Example Usage
+For a detailed example, check out the [examples](./examples/readme.md).
+
 ## Directory Structure
 
 - `src/` contains the source code for the package.
