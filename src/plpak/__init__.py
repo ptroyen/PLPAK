@@ -7,9 +7,10 @@ from .integrator import Solution, updateFromYsp
 from .mecWrapper import PlasmaMechanism, PlasmaSolver
 from .extraModels import LaserModel, CombinedModels, photoIonizePPT
 
-# define the version of the package
-# __version__ = '0.1.0' 
-# Author : Sagar Pokharel : pokharelsagar1015@gmail.com // https://github.com/ptroyen
+# Version: 0.1.0
+# Author: Sagar Pokharel (pokharelsagar1015@gmail.com)
+# GitHub: https://github.com/ptroyen
+# Please retain this header and attribution when modifying or redistributing this code.
 
 ## Change log ----------------------------------------------
 # PlasmaMechanism: Reads the custom mechanism file and creates the plasma mechanism
