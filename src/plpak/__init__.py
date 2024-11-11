@@ -9,6 +9,7 @@ from .extraModels import LaserModel, CombinedModels, photoIonizePPT
 
 # define the version of the package
 # __version__ = '0.1.0' 
+# Author : Sagar Pokharel : pokharelsagar1015@gmail.com // https://github.com/ptroyen
 
 ## Change log ----------------------------------------------
 # PlasmaMechanism: Reads the custom mechanism file and creates the plasma mechanism
