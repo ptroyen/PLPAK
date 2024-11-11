@@ -319,10 +319,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         ne = nI
         n0 = n0 - nI
-        # Ysp0 = np.array([0.0,n0,0,0,0,0,nI,0,0,ne])
-        Ysp0[idN2] = n0
-        Ysp0[idN2p] = nI
-        Ysp0[idele] = ne
+        Ysp0 = np.array([0.0,n0,0,0,0,0,nI,0,0,ne])
     ##-----------------------------------------------------------------------------------------------------------------
     elif sp == 'Air':
     ##  For air mechanism -----------------------------------------------------------------------------------------------
@@ -471,7 +468,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # # # For ne = 1.4e22 ; Papeer
         # nO2p = 0.0
-        # nN2p = 1.0e21
+        # nN2p = 1.0e21   # papeer n2
 
         # # For ne = 1.0e22 ; laux
         # nO2p = 7.2e21*0.001
@@ -828,7 +825,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # also plot papeer N2
         # refdata = np.loadtxt("airPlasma/papeerN214e21normalized.csv")
-        fload = os.path.join(dir_plpak,"papeerN21e21normalized.csv")
+        fload = os.path.join(dir_data_exp,"papeerN214e21normalized.csv")
         refdata = np.loadtxt(fload)
         Npeak = 1.0e21 # reference values are normalized with this value
         reft = refdata[:,0]
@@ -959,24 +956,32 @@ if __name__ == "__main__":
     # testBuildODE(mechFile,lang='python')
 
 
-    #### Test the 0D Solver ####
-    # fname="testRunAir"
-    fname="testRunN2"
+    # Run the test
+    # fname = "fracO2Change22p0IN_N2_test"
+    # fname = "fracO2Change0p1IN_N2_test"
+    # fname = "fracO2Change2p0IN_N2_test"
+    # fname = "fracO2Change0p0IN_N2_test"
+    # fname = "airPlasmaSolnTemporal"
+    # fname = "N2SolnsCheckN"
+    # fname = "TestlowP"
+    fname="testRun"
 
-    # mechanism file and initial condition identifier
-    mechFile="../data/N2PlasmaMech.yaml"
-    sp='N2'
+    # mechFile="mecFiles/AirPlasmaMech.yaml"
+    # mechFile="mecFiles/AirPlasmaMech_HighT.yaml"
+    # mechFile="mecFiles/AirPlasmaMech_HighT_Associon.yaml"
+    mechFile="../data/AirPlasmaMech_v2.yaml"
+    sp='Air'
+    # sp='N2combined'
 
-    # # mechFile="../data/AirPlasmaMech_v2.yaml"
-    # mechFile="../../plasmaKinetics/airPlasma/AirPlasmaMech_HighT_AssocIon.yaml"
-    # sp='Air'
+    # mechFile="mecFiles/N2PlasmaMech.yaml"
+    # sp='N2'
 
-    # Solve the system
-    TvO2 = None     # for pure N2 and when Tv is not present
-    # TvO2 = 3000.0   # Set Tv for O2
-    Te0 = 3.0*11600.0   # initial electron temperature
-    finalTime = 1.0e-6  # final time
-    directSolve(fname=fname,Te0=Te0,dt=finalTime,mechFile=mechFile,sp=sp,TvO2=TvO2)
+    # # For Aleksandrovs
+    # fname = "TestplasmaSolnAleks"
+    # mechFile="airPlasma/N2PlasmaMechAleks.yaml"
+    # sp='N2Aleks'
+
+    directSolve(fname=fname,Te0=3.0*11600.0,dt=1.0e-6,mechFile=mechFile,sp=sp,ne=1.0e23)
 
 
 
