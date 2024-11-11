@@ -4,5 +4,8 @@
 # Ignore PDF files
 *.pdf
 
+## also ignore any .txt files inside ./examples
+/examples/*.txt
+
 # Python-specific ignores
 __pycache__/
