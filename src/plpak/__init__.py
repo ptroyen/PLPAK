@@ -15,6 +15,7 @@ from .extraModels import LaserModel, CombinedModels, photoIonizePPT
 # Custom mechanism file can take any rate expression and can also specify the energy exchange in multi-temperature model
 # PlasmaSolver: Solves the plasma kinetics only from the plasma mechanism
 # PlasmaSolver3T: Solves the plasma kinetics along with 3T model ( Tv for N2)
+# PlasmaSolver3T: now has a TvO2 information as well. Example shows usage of TvO2, simple VT relaxation approach only. No vv exchange between O2 and N2 here which is significant at high gas temperature only
 __version__ = '0.2.0'
 
 ## Change log ----------------------------------------------
