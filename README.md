@@ -26,7 +26,7 @@ For more details, see the **[src/readme.md](./src/readme.md)**.
 
 - `src/` contains the source code for the package.
 - `example/` contains examples of how to use the package and relevant .py script to load the library and run the simulations.
-- `data/` contains the data files required for the examples. Reaction mechanisms for $N_2$-plasma and experimental data for comparison are included.
+- `data/` contains the data files required for the examples. Reaction mechanisms for $N_2$-plasma and experimental data for comparison are included. Please contact developers for use of air-plasma model.
 
 
 ### Test
