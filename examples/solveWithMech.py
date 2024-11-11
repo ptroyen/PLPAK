@@ -10,8 +10,9 @@ import sys
 import os
 
 # dir_plpak = os.path.dirname("E:\POKHAREL_SAGAR\gits\plasmaKinetics\plpak")
-dir_plpak = os.path.dirname("../src/plpak")
-sys.path.append(dir_plpak)
+dir_plpak_data = os.path.dirname("../data")
+dir_plpak_src = os.path.dirname("../src/plpak")
+sys.path.append(dir_plpak_src)
 import plpak as pl
 
 import cantera as ct
@@ -183,6 +184,53 @@ def dYdt_all_base(t, Y, plasmaSys):
     return dydt
 
 
+## Solve the species and temperatures at the same time in a single ODE system
+def dYdt_all_base_TvO2(t, Y, plasmaSys):
+    # update the system based on the state
+    # last three are bulk temerature, vibrational temperature, and electronic temperature
+    plasmaSys.Ysp = Y[0:-4]
+
+    plasmaSys.Temp[0] = Y[-4]
+    plasmaSys.Temp[1] = Y[-3]
+    plasmaSys.Temp[2] = Y[-2]
+
+    TvO2 = Y[-1]
+    theta_v_O2 = 2256.0 # K
+    Tg = plasmaSys.Temp[0]
+
+    # update the system
+    plasmaSys.update()
+
+    # zeros dydt
+    dydt = np.zeros(len(Y))
+
+    # update the species rates
+    dydt[0:-4] = plasmaSys.dYdt
+    # update the temperature rates
+    dydt[-4:-1] = plasmaSys.dTdt
+
+
+
+    # update the vibrational temperature of O2 --------------------------------
+    dEv_dTv_o2 = plasmaSys.dEv_dTv_(TvO2, theta_v_O2)
+    nO2 = plasmaSys.Ysp[plasmaSys.gas.species_index('O2')]
+        
+    Ev_Tv = plasmaSys.vibEnergy(TvO2, theta_v_O2)
+    Ev_T = plasmaSys.vibEnergy(Tg, theta_v_O2)
+    QVT_O2 = (Ev_Tv - Ev_T)*nO2/plasmaSys.tauVT_O2 # J/m3-s
+
+    dydt[-1] = (-QVT_O2/nO2)/dEv_dTv_o2
+    # update gas temperature equation with QVT_O2
+    dydt[-4] += QVT_O2/(plasmaSys.cp_mix*plasmaSys.rho)
+    ## ---------------------------------------------------------------------------
+    # show TvO2
+    print("TvO2: ", TvO2)
+
+
+
+    return dydt
+
+
 
 
 def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/combinedAirMech.yaml",sp='N2',**kwargs):
@@ -202,9 +250,18 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     # plasmaSystem = newPlasmaSolver
     plasmaSystem = pl.PlasmaSolver3T
 
+    TvibO2 = kwargs.get('TvO2',None)
+
 
     ## which ODEfunction to use : dydt_all = [dYdt_all_base, dYdt_all_laser]
     dYdt_all = dYdt_all_base
+
+
+    if TvibO2 is not None:
+        dYdt_all = dYdt_all_base_TvO2
+
+
+
 
 
     # make the plasma system
@@ -266,7 +323,6 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         Ysp0[idN2] = n0
         Ysp0[idN2p] = nI
         Ysp0[idele] = ne
-
     ##-----------------------------------------------------------------------------------------------------------------
     elif sp == 'Air':
     ##  For air mechanism -----------------------------------------------------------------------------------------------
@@ -299,15 +355,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         # O2+ =  1.2472092965932226e+23
         # e =  1.4068878833132318e+23
         nNeutral = 2.4475e25
-        fracO2 = 0.22
-
-
-        # IUSE =  5.395e+17  W/m2
-        # N2+ =  1.4756006490408548e+22
-        # O2+ =  8.574603328780707e+22
-        # e =  1.0e+23
-        nN2p = 1.4756006490408548e+22
-        nO2p = 8.574603328780707e+22
+        perO2 = 0.22
 
     # #    ## For 1.0e23; Aleksandrov
     #     nN2p = 1.5967858672000928e+22
@@ -319,70 +367,53 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         # nN2p = ne - nO2p
         
 
-        # # For ne = 1.4e22 ; Papeer
-        # ne = 1.4e22
-        # nN2p = 1.565427079273731e+21
-        # nO2p = ne - nN2p
+        # For ne = 1.4e22 ; Papeer
+        ne = 1.4e22
+        nN2p = 1.565427079273731e+21
+        nO2p = ne - nN2p
+
+        # ## Gerardo Thomson tighut focusing : 8.0e18 W/m2 , ne = 5.0e23
+        # nN2p = 1.8e23
+        # nO2p = 5.2e23
+
+        nN2p = 2.0e23
+        nO2p = 3.0e23
+
+        nN2p = 2.5e23
+        nO2p = 3.5e23
+
+        # n2p = 2.5e23
+        # nO2p = 4.5e23
+
+
+
+
+        # nN2p = 1.0e23
+        # nO2p = 4.0e23
+
+        ne = nN2p + nO2p
 
         # # For ne = 1.0e22 ; laux
         # nO2p = 7.2e21*0.001
         # nN2p = 1.754e21*0.001
 
         # # N2 for Aleks with 2.75 percent O2
-        # # fracO2 = 0.0275
-        # fracO2 = 0.01
+        # perO2 = 0.0275
         # ne = 1.0e23
-        # # nN2p = 7.128615137544911e+22
+        # nN2p = 7.128615137544911e+22
         # # nN2p = 4.128615137544911e+22
-        # nN2p = 9.0e+22
         # nO2p = ne - nN2p
 
 
-        ## different percentage of O2 analysis:
-        ## IUSE = 7.46e17 # W/m2 for Ne = 1.0e23 for pure N2
-        perO2 = 0.0
-        nN2p = 1.0e23
-        nO2p = 0.0
-
-        perO2 = 0.1 # 0.1 % O2
-        nN2p = 9.9521e+22
-        nO2p = 1.5812e21
-
-        # perO2 = 0.2 # 0.1 % O2
-        # nN2p = 9.8959e+22
-        # nO2p = 3.1492e21
-
-        perO2 = 2.0
-        nN2p = 8.9906900149181e+22
-        nO2p = 2.936401769497202e+22
-
-        # perO2 = 10.0
-        # nN2p = 6.4881e+22
-        # nO2p = 1.1719e+23
-
-        # perO2 = 22.0 # air with intesnity same as when nitrogen gives 1.0e23 m-3
-        # nN2p = 4.6587e+22
-        # nO2p = 2.1335e+23
-
-
-        # ## IUSE : 5.392e17 # W/m2 , produced 1.0e23 m-3
-        # perO2 = 22.0 # air
-        # nN2p = 1.4694600876168378e+22
-        # nO2p = 8.543904655703331e+22
-
-
-
-
-        fracO2 = perO2/100.0
         ne = nN2p + nO2p
         rho_c = nN2p + nO2p - ne
-        NN2 = nNeutral*(1-fracO2) - nN2p
-        NO2 = nNeutral*(fracO2) - nO2p
+        NN2 = nNeutral*(1-perO2) - nN2p
+        NO2 = nNeutral*(perO2) - nO2p
         # NO2 = 1000
 
         # Ysp0 = np.array([0,NN2,0,0,0,0,0,NO2,0,0,0,0,nN2p,0,0,nO2p,0,0,0,0,0,ne])
 
-        # update the initial conditions
+                # update the initial conditions
         Ysp0[idN2] = NN2
         Ysp0[idN2p] = nN2p
         Ysp0[idele] = ne
@@ -412,7 +443,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
 
 
-        fracO2 = 0.0
+        perO2 = 0.0
         perNO = 0.000
         # Mixture , N2^+, O2^+ and E only
         # ipotN2 = 15.5810
@@ -431,16 +462,16 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
        ## For 1.0e23; Aleksandrov
         nN2p = 1.0e23
         nO2p = 0.0
-    # # #     # nN2p = 9.0e22
-    # # #     # nO2p = 1.0e22
+    # #     # nN2p = 9.0e22
+    # #     # nO2p = 1.0e22
 
         # # # for 4.0e23 ; Chizov
         # nN2p = 5.0e23
         # nO2p = 0.0
 
-        # # For ne = 1.4e22 ; Papeer
-        nO2p = 0.0
-        nN2p = 1.0e21   # papeer n2
+        # # # For ne = 1.4e22 ; Papeer
+        # nO2p = 0.0
+        # nN2p = 1.0e21
 
         # # For ne = 1.0e22 ; laux
         # nO2p = 7.2e21*0.001
@@ -452,10 +483,10 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
 
         ne = nN2p + nO2p
-        # fracO2 = 0.0
+        # perO2 = 0.0
         rho_c = nN2p + nO2p - ne
-        NN2 = nNeutral*(1.0 - fracO2 - perNO) - nN2p
-        NO2 = nNeutral*(fracO2) - nO2p
+        NN2 = nNeutral*(1.0 - perO2 - perNO) - nN2p
+        NO2 = nNeutral*(perO2) - nO2p
         NO = nNeutral*(perNO)
         # NO2 = 1000
 
@@ -496,11 +527,11 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         nNeutral = 2.5e25
         perH2O = 0.00
         perN2 = 0.78
-        fracO2 = 0.22
+        perO2 = 0.22
 
         # correct because of perH2O
         perN2 = perN2/(1-perH2O)
-        fracO2 = fracO2/(1-perH2O)
+        perO2 = perO2/(1-perH2O)
 
         # For 1.0e23
         # nN2p = 1.5967858672000928e+22
@@ -524,7 +555,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         ne = nN2p + nO2p
         rho_c = nN2p + nO2p - ne
         NN2 = nNeutral*(perN2) - nN2p
-        NO2 = nNeutral*(fracO2) - nO2p
+        NO2 = nNeutral*(perO2) - nO2p
         NH2O = nNeutral*(perH2O)
         # NO2 = 1000
 
@@ -625,6 +656,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     # T0s = np.array([300.0, 300.0, 11600.0])
     T0s = np.array([300.0,350.0,Te0])
 
+
     # Initialize with initial conditions
     plasmaSys.Ysp0 = Ysp0
     plasmaSys.Temp0 = T0s 
@@ -646,9 +678,14 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     # setup the array for initial conditions all solved at once
     # need to combine Ysp and Temp
     yt0 = np.concatenate((plasmaSys.Ysp, plasmaSys.Temp))
-    # change the Tg to Ug
-    # yt0[-3] = plasmaSys.Ug
-    # yt0[-3] = plasmaSys.Hg
+
+
+
+    if TvibO2 is not None:
+        yt0 = np.concatenate((plasmaSys.Ysp, plasmaSys.Temp, [TvibO2]))
+
+
+
 
     # time details
     t0 = 0
@@ -685,12 +722,13 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
     # Now for post-processing, calculate all the properties based on the solved state
     for i in range(len(solY.t)):
+        nsp = plasmaSys.nsp
         # set the state
-        plasmaSys.Ysp = solY.y[0:-3,i]
-        plasmaSys.Temp[1] = solY.y[-2,i]
-        plasmaSys.Temp[2] = solY.y[-1,i]
+        plasmaSys.Ysp = solY.y[0:nsp,i]
+        plasmaSys.Temp[1] = solY.y[nsp+1,i]
+        plasmaSys.Temp[2] = solY.y[nsp+2,i]
         # plasmaSys.Hg = solY.y[-3,i]
-        plasmaSys.Temp[0] = solY.y[-3,i]
+        plasmaSys.Temp[0] = solY.y[nsp+0,i]
 
         # # find temperature and set it
         # X = plasmaSys.numbDensity2X(plasmaSys.Ysp) # mole fraction
@@ -713,14 +751,22 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     # save the solution
     soln.solnSave(fname+'.npz')
 
+
     # save # time,N,N2,N2_A,N2_B,N2_C,Np,N2p,N3p,N4p,ele in .txt file
     # np.savetxt(fname+'.txt', np.transpose(np.concatenate((solY.t.reshape(1,-1), solY.y[0:-3,:]))), delimiter='\t')
-    np.savetxt(fname+'.txt', np.transpose(np.concatenate((solY.t.reshape(1,-1), solY.y[:,:]))), delimiter='\t')
+    ## put the header names in the file as well : fname+'.txt'
+    header_all = "time\t"
+    for i in range(nsp):
+        header_all += plasmaSys.gas.species_name(i) + "\t"
+    # last headers are the temperatures
+    header_all += "Tg\tTv\tTe"
+    np.savetxt(fname+'.txt', np.transpose(np.concatenate((solY.t.reshape(1,-1), solY.y[:,:]))), delimiter='\t', header=header_all)
     
     # get electron density
     Nes = solY.y[-4,:]
     # save time and electron density
-    np.savetxt(fname+'_Ne.txt', np.transpose(np.concatenate((solY.t.reshape(1,-1), Nes.reshape(1,-1)))), delimiter='\t')
+    header_Ne = "time\tNe"
+    np.savetxt(fname+'_Ne.txt', np.transpose(np.concatenate((solY.t.reshape(1,-1), Nes.reshape(1,-1)))), delimiter='\t', header=header_Ne)
 
     # make a figure to plot during the integration
     fig, ax = plt.subplots(2,1, sharex=True)
@@ -737,8 +783,10 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     ax[0].set_yscale('log')
     ax[1].set_yscale('log')
 
-    res_ysps = solY.y[0:-3]
-    res_Ts = solY.y[-3:]
+
+    nspecies = plasmaSys.nsp
+    res_ysps = solY.y[0:nspecies]
+    res_Ts = solY.y[nspecies:nspecies+3]
 
     # get results for electron density only
     resNe = res_ysps[:,-1]
@@ -746,6 +794,15 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     # name of species
     spNames = plasmaSys.gas.species_names
 
+    # Get the absolute path for ../data
+    dir_plpak_data = os.path.abspath("../data")
+
+    # Set dir_plpak to the path ../data/dataExp
+    dir_plpak = os.path.join(dir_plpak_data, "dataExp")
+
+    print("directory for data: ", dir_plpak_data)
+    print("directory for Expdata: ", dir_plpak)
+        
     # Species to plot
     # plt_sps = ['N2','N','ele','N2p','Np']
     plt_sps = spNames
@@ -759,13 +816,11 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
                 ax[0].plot(solY.t, res_ysps[i,:], label=spNames[i])
 
 
-
-    dir_data_exp = "../data/dataExp"
     if sp == 'N2Aleks' or sp == "N2combined" or sp == "N2":
         # plot reference solution from Aleksandrov
         print("Plotting reference solution from Aleksandrov")
         # refdata = np.loadtxt("Aleksandrov_1atm_N2femtosecondDecay.dat", skiprows=1)
-        fload = os.path.join(dir_data_exp,"Aleksandrov_1atm_N2femtosecondDecay.dat")
+        fload = os.path.join(dir_plpak,"Aleksandrov_1atm_N2femtosecondDecay.dat")
         refdata = np.loadtxt(fload, skiprows=1)
         reft = refdata[:,0]*1.0e-9
         refNe = refdata[:,1]
@@ -773,7 +828,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # also plot papeer N2
         # refdata = np.loadtxt("airPlasma/papeerN214e21normalized.csv")
-        fload = os.path.join(dir_data_exp,"papeerN21e21normalized.csv")
+        fload = os.path.join(dir_plpak,"papeerN21e21normalized.csv")
         refdata = np.loadtxt(fload)
         Npeak = 1.0e21 # reference values are normalized with this value
         reft = refdata[:,0]
@@ -784,7 +839,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     if sp == 'Air' or sp == 'AirAleks':
         print("Plotting reference")
         # refdata = np.loadtxt("airData.csv")
-        fload = os.path.join(dir_data_exp,"airData.csv")
+        fload = os.path.join(dir_plpak,"airData.csv")
         refdata = np.loadtxt(fload)
         reft = refdata[:,0]*1.0e-9
         refNe = refdata[:,1]
@@ -792,7 +847,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # another reference : Papeer
         # refdata = np.loadtxt("airPlasma/papeerAir14e21normalized.csv")
-        fload = os.path.join(dir_data_exp,"papeerAir14e21normalized.csv")
+        fload = os.path.join(dir_plpak,"papeerAir14e21normalized.csv")
         refdata = np.loadtxt(fload)
         Npeak = 1.4e22 # reference values are normalized with this value
         reft = refdata[:,0]
@@ -815,7 +870,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
         # plot aleksandrovs N2 with 2.75 percent O2
         print("Plotting reference solution from Aleksandrov")
         # refdata = np.loadtxt("Aleksandrov_1atm_N2femtosecondDecay.dat", skiprows=0)
-        fload = os.path.join(dir_data_exp,"Aleksandrov_1atm_N2femtosecondDecay.dat")
+        fload = os.path.join(dir_plpak,"Aleksandrov_1atm_N2femtosecondDecay.dat")
         refdata = np.loadtxt(fload, skiprows=0)
         reft = refdata[:,0]*1.0e-9
         refNe = refdata[:,1]
@@ -842,6 +897,10 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
     ax[1].plot(solY.t, res_Ts[0,:], label='Tg')
     ax[1].plot(solY.t, res_Ts[1,:], label='Tv')
     ax[1].plot(solY.t, res_Ts[2,:], label='Te')
+
+    ## Tv if present
+    if TvibO2 is not None:
+        ax[1].plot(solY.t, solY.y[-1,:], label='TvibO2')
 
 
     # ax[0].legend()
@@ -895,38 +954,33 @@ def testBuildODE(mechFile = "./airPlasma/N2PlasmaMech.yaml",lang='CXX'):
 
 if __name__ == "__main__":
 
-
-    # # ## Build 
+    #### Example To Build ODEs  ####
     # mechFile = "./airPlasma/combinedAirMechEne.yaml"
     # testBuildODE(mechFile,lang='python')
 
 
-    # Run the test
-    # fname = "fracO2Change22p0IN_N2_test"
-    # fname = "fracO2Change0p1IN_N2_test"
-    # fname = "fracO2Change2p0IN_N2_test"
-    # fname = "fracO2Change0p0IN_N2_test"
-    # fname = "airPlasmaSolnTemporal"
-    # fname = "N2SolnsCheckN"
-    # fname = "TestlowP"
-    # fname="testRunair"
+    #### Test the 0D Solver ####
+    # fname="testRunAir"
     fname="testRunN2"
 
-    # mechFile="../data/AirPlasmaMech_v2.yaml"
+    # mechanism file and initial condition identifier
     mechFile="../data/N2PlasmaMech.yaml"
     sp='N2'
-    # sp='N2combined'
 
-    # mechFile="mecFiles/N2PlasmaMech.yaml"
-    # sp='N2'
+    # # mechFile="../data/AirPlasmaMech_v2.yaml"
+    # mechFile="../../plasmaKinetics/airPlasma/AirPlasmaMech_HighT_AssocIon.yaml"
+    # sp='Air'
 
-    # # For Aleksandrovs
-    # fname = "TestplasmaSolnAleks"
-    # mechFile="airPlasma/N2PlasmaMechAleks.yaml"
-    # sp='N2Aleks'
+    # Solve the system
+    TvO2 = None     # for pure N2 and when Tv is not present
+    # TvO2 = 3000.0   # Set Tv for O2
+    Te0 = 3.0*11600.0   # initial electron temperature
+    finalTime = 1.0e-6  # final time
+    directSolve(fname=fname,Te0=Te0,dt=finalTime,mechFile=mechFile,sp=sp,TvO2=TvO2)
 
-    directSolve(fname=fname,Te0=3.0*11600.0,dt=1.0e-6,mechFile=mechFile,sp=sp)
 
+
+    #### Post Processing ####
     #  # plot the solution object
     pvars = ['Ysp','Temp','Wrxn','Qmodes','dhrxn','Qdot']
     # pl.Solution.plotSoln(fname,pvars=pvars,prx=14,fmax=True,grp=11) # prx = # of max reactions to check, for fmax = True, if false provide array of reactions to check in prx
@@ -944,20 +998,6 @@ if __name__ == "__main__":
     # grp = 0 shows first set of max prx reactions if fmax = True
     # grp = 1 shows second set of max prx reactions if fmax = True which comes after grp = 0
 
-
-    # # # to plot temporal scale, provide which reactions to plot in pids - 16 electron impact ionization , huge when Te is high
-    # pids = None ## finds smallest time scale and use them later
-    # # samllest : 51 61 57 191 192 55 59 65 27 46 114 53 69 66 21
-    # # pids = np.array([40,35,52,12,32,45,39])-1 # for nitrogen peters
-    # # pids = np.array([51,61,57,191,192,55,59,65,27,46,114,53])-1     # important reactions, update : detachment, atachment, recombination, ion exchange, NO formation, NO+ recombination, dissociation, electronic excitation
-    # # pids = np.array([51,46,61,21,69,72,25,26,71,79,80,54])-1     # important reactions, update : detachment, atachment, recombination, ion exchange, NO formation, NO+ recombination, dissociation, electronic excitation
-    # # pids = np.array([51,46,61,21,191,69,72,71,79,54])-1     # important reactions Filtered : detachment, atachment, recombination, ion exchange, NO formation, NO+ recombination, dissociation, electronic excitation
-    # # pids = np.array([51,46,61,21,191,127,86,190,91,69,72,71,79,54])-1     # important reactions Filtered + add some more for air
-    # pids = np.array([51,191,46,69,190,91,79,61,54,71,127,167])-1     # important reactions Filtered + add some more for air
-    # # pids = np.array([51,191,69,190,91,79,61,54,71])-1     # important reactions , remove non electron impact ones, ut mention
-    # # pids = np.array([51,191,46,69,190,91,86,79,61,54,71])-1     # important reactions Filtered + add some more for air
-    # # pids =  np.array([80,79,70,71,26,75,21,22,23,17,69,72]) - 1 # # important electron loss channels - air?
-    # # pids =  np.array([69,21,26,72,17,71,79,80]) - 1 # # important electron loss channels filtered - air
     # saveTo = 'airImpRxnsAll_'
     # plotTemporalScale(fname,pids=pids,saveTo=saveTo)
     # # show which reactions are these

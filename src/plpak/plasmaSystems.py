@@ -47,8 +47,21 @@ class PlasmaSolver3T(PlasmaSolver):
                     'N': [180.8, 0.0262],
                     'O': [72.4, 0.0150] }
 
+    # For O2+M also needed the relaxation times, not always used so store in a new variable
+    # tauVT_O2 = None # if not None then use it
+    # partners : N2, O2, NO, N, O
+    # for O2 + O this is wrong, use adrienko-boyd results, the nature of the fit is different, high T high p-tau, for this only
+    VT_O2_ABs = {  'N2': [131.3, 0.0295],
+                    'O2': [135.9, 0.0300],
+                    'NO': [133.7, 0.0298],
+                    'N': [72.4, 0.0150],
+                    'O': [47.7, 0.0590] }       ## for O, at low temperature rapid relaxation happens, so use different formulation
+
+
     def __init__(self, mechFile, verbose=False):
         super().__init__(mechFile, verbose=False)
+        self.tauVT_O2 = None # if not None then use it
+        self.QVT_O2 = None # if not None then use it
 
     def Qmodes_(self):
         '''
@@ -67,11 +80,16 @@ class PlasmaSolver3T(PlasmaSolver):
 
         eID = gas.species_index('ele')
         n2ID = gas.species_index('N2')
+        if 'O2' in gas.species_names:
+            o2ID = gas.species_index('O2')
+        else:
+            o2ID = None
 
         m_n2 = gas.molecular_weights[n2ID]/(self.Na*1000.0) # kg per particle
 
         ne = self.Ysp[eID]
         nN2 = self.Ysp[n2ID]
+        nO2 = self.Ysp[o2ID]
 
         # total neutral number density
         nTot = self.p/(CO_kB*Tg)
@@ -289,10 +307,6 @@ class PlasmaSolver3T(PlasmaSolver):
         Kves[7] = self.bolsigFit(meanEe, evi8bfit)
 
 
-
-
-
-
         # Kves = np.ones(8)*self.Krxn[43-1]   # should have different rate constants for each vibrational level
         
 
@@ -317,6 +331,29 @@ class PlasmaSolver3T(PlasmaSolver):
         # print("tauVT Park : ", n2tau_vt_park, "tauVT Millikan : ", n2tau_vt_simple)
         # # # show the mole fractions used as well
         # print("XN2s : ", XN2s, "XO2s : ", XO2s, "XNOs : ", XNOs, "XOs : ", XOs, "XNs : ", XNs,'XSums : ', XSums)
+
+
+
+        ## Now VT for O2, just populate the self.tauVT_O2 --------------------------------
+        # Define the lambda function for O2-O
+        # Formula: x = T/1000; (a*x**4 + b*x**3 + c*x**2 + d*x + e) * 1e-8
+        # Parameters: a=-0.005798969725915833, b=0.11728071482076785, c=-0.8698505755385431, d=3.057577147662221, e=-0.043170994873928975
+        ptau_VT_o2_o = lambda T: (-0.005798969725915833 * (T/1000)**4 + 
+                                0.11728071482076785 * (T/1000)**3 + 
+                                -0.8698505755385431 * (T/1000)**2 + 
+                                3.057577147662221 * (T/1000) + 
+                                -0.043170994873928975) * 1e-8
+
+        sum_x_taus_o2 = p_atm*( XN2s / ptauVT_Park(Tg,self.VT_O2_ABs['N2'][0],self.VT_O2_ABs['N2'][1])
+                            + XO2s / ptauVT_Park(Tg,self.VT_O2_ABs['O2'][0],self.VT_O2_ABs['O2'][1])
+                            + XNOs / ptauVT_Park(Tg,self.VT_O2_ABs['NO'][0],self.VT_O2_ABs['NO'][1])
+                            + XOs / ptau_VT_o2_o(Tg) 
+                            + XNs / ptauVT_Park(Tg,self.VT_O2_ABs['N'][0],self.VT_O2_ABs['N'][1]) )
+        o2tau_vt_park = XSums/sum_x_taus_o2
+        self.tauVT_O2 = o2tau_vt_park
+
+        #### comment this if O2 vibrational relaxation is not needed ----------------
+
 
         n2tau_vt = n2tau_vt_park # or use n2tau_vt_simple
         Ev_Tv = self.vibEnergy(Tv,self.n2Tvib_c) # per particle
