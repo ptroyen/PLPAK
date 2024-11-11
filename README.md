@@ -11,6 +11,12 @@ If you utilize the package in your research, please cite the following papers:
 
 
 # Installation
+- Tested on the following
+    - Python 3.9.20
+    - Cantera==2.6.0
+    - matplotlib==3.9.2
+    - Scipy and Sympy (for full functionality) 
+
 - Clone the repository or download the zip file.
 - Add path to the directory containing the package to the environment variable and import.
     ```python
