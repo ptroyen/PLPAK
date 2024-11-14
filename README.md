@@ -1,5 +1,5 @@
 # PLPAK
-Package for Low Temperature Plasma Kinetics
+Package for Low Temperature Plasma Kinetics : https://github.com/ptroyen/PLPAK
 
 PLPAK is a library built for zero-dimensional analysis of plasma-kinetic systems based on provided reaction mechanism set. For non-equilibrium reactions multiple temperatures might be required to specify the rates of reactions and on top of that rate equations for energy exchanges in different modes are also essential. PLPAK is built to streamline the process of building such reaction systems, testing them and solving them.
 
