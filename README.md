@@ -7,7 +7,9 @@ PLPAK is a library built for zero-dimensional analysis of plasma-kinetic systems
 
 # Usage
 If you utilize the package in your research, **please cite the following papers**:
+- Pokharel, S., & Tropina, A. (2025). Characteristics of Femtosecond Laser Induced Filament and Energy Coupling by Nanosecond Laser Pulse in Air (arXiv:2502.00875). arXiv. https://doi.org/10.48550/arXiv.2502.00875
 - Pokharel, S., & Tropina, A. A. (2023). Self-consistent model and numerical approach for laser-induced non-equilibrium plasma. Journal of Applied Physics, 134(22), 223301. https://doi.org/10.1063/5.0175177
+
 
 
 ## Contact Details 
