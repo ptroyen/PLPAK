@@ -19,15 +19,12 @@ import cantera as ct
 import numpy as np
 import scipy as sc
 
-
 # import functions from test.py file all of them
 from test import plotTemporalScale
 
 pi = np.pi
 log = np.log
 exp = np.exp
-
-
 
 bolsigFit = pl.System.bolsigFit # needs E in eV
 coul_log = pl.System.coul_log # needs Te in eV and n_e in m^-3
@@ -255,6 +252,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
     ## which ODEfunction to use : dydt_all = [dYdt_all_base, dYdt_all_laser]
     dYdt_all = dYdt_all_base
+    # dYdt_all = dYdt_all_laser
 
 
     if TvibO2 is not None:
@@ -381,9 +379,6 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # n2p = 2.5e23
         # nO2p = 4.5e23
-
-
-
 
         # nN2p = 1.0e23
         # nO2p = 4.0e23
@@ -825,7 +820,7 @@ def directSolve(fname='solnPlasma',Te0=11600.0,dt=1.0e-6,mechFile="airPlasma/com
 
         # also plot papeer N2
         # refdata = np.loadtxt("airPlasma/papeerN214e21normalized.csv")
-        fload = os.path.join(dir_data_exp,"papeerN214e21normalized.csv")
+        fload = os.path.join(dir_plpak,"papeerN214e21normalized.csv")
         refdata = np.loadtxt(fload)
         Npeak = 1.0e21 # reference values are normalized with this value
         reft = refdata[:,0]

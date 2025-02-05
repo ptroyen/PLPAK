@@ -47,7 +47,7 @@ class LaserModel:
         self.shapeConstant = 'constant'
         # based on the shape, use the appropriate function
         self.useShape = kwargs.get('shape', self.shapeGauss) # by default use gauss
-        self.updateIn = self.updateInGauss
+        self.updateIn = self.updateInConstant
         if self.useShape == self.shapeShaped:
             self.updateIn = self.updateInShaped
         if self.useShape == self.shapeConstant:
@@ -149,7 +149,8 @@ class LaserModel:
 
     def updateInConstant(self, t):
         '''
-        Get the intensity of the laser based on the time, square pulse
+        Get the intensity of the laser based on the time, square pulse,
+        delay here is the peak of the pulse as this is a square pulse
         '''
         # get the intensity
         In0 = self.In0
@@ -160,8 +161,13 @@ class LaserModel:
         self.tau_t = self.fwhm/2.355
         # sigma = self.tau_t
 
-        start_t = delay - self.fwhm*0.5
-        end_t = delay + self.fwhm*0.5
+        # ## for delay at the middle of the pulse
+        # start_t = delay - self.fwhm*0.5
+        # end_t = delay + self.fwhm*0.5
+
+        ## for delay at the start of the pulse
+        start_t = delay
+        end_t = delay + self.fwhm
 
         In = 0.0
 

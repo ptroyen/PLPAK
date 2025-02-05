@@ -462,10 +462,23 @@ class Solution:
 
         # read the data
         data = np.load(fname+'.npz',allow_pickle=True)
+        plot_varName = kwargs.get('plotVarName','dNdtRxn')
 
         # load time and dNdtRxn
         solt = data['t']
-        solndNdtRxn = data['dNdtRxn']
+        # solndNdtRxn = data['dNdtRxn']
+
+        ## if plot variable name starts with Y_X then X is the name of the species and we need the production rate of the spcies to be plotted
+        if plot_varName.startswith('Y_'):
+            # get the species name
+            speName = plot_varName.split('_')[1]
+            spe_idx = plasmaSys.gas.species_index(speName)
+
+            ## now need to calculate the production rate of the species as all of this is not saved 
+            dNdt = data['Wrxn']*plasmaSys.effStoic[:,spe_idx]
+            solndNdtRxn = dNdt
+        else:
+            solndNdtRxn = data[plot_varName]
 
         # show size of solndNdtRxn and solt
         print('solndNdtRxn shape = ',solndNdtRxn.shape)
@@ -715,6 +728,19 @@ class Solution:
         solt = data['t']
         # solndNdtRxn_def = data['dNdtRxn']
         plot_varName = kwargs.get('plotVarName','dNdtRxn')
+
+        ## if plot variable name starts with Y_X then X is the name of the species and we need the production rate of the spcies to be plotted
+        if plot_varName.startswith('Y_'):
+            # get the species name
+            speName = plot_varName.split('_')[1]
+            spe_idx = plasmaSys.gas.species_index(speName)
+
+            ## now need to calculate the production rate of the species as all of this is not saved 
+            dNdt = data['Wrxn']*plasmaSys.effStoic[:,spe_idx]
+            solndNdtRxn = dNdt*pos
+
+
+
         id_col = kwargs.get('id_col',0) # default is 0, if there are multiple columns
 
         if plot_varName == 'Qrxn_I':
@@ -726,9 +752,9 @@ class Solution:
             solndNdtRxn = data[plot_varName]*pos
 
 
-        # if there are multiple columns, select the id_col
-        if len(solndNdtRxn.shape) > 2:
-            solndNdtRxn = solndNdtRxn[:,id_col]
+        # # if there are multiple columns, select the id_col
+        # if len(solndNdtRxn.shape) > 2:
+        #     solndNdtRxn = solndNdtRxn[:,id_col]
 
 
         # make a figure
