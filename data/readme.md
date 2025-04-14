@@ -1,34 +1,42 @@
-PLPAK Reaction Mechanism Format
+PLPAK Reaction Mechanism Format (Short Description)
+
+This format extends Cantera for custom reaction attributes.
+
+
+**1. `newAttributeSet` (Global Settings):**
+   - `unit`: Default unit for `newAttribute` if not specified there.
+   - `vars`: Maps short names (e.g., `Te`) to variable names used in expressions.
+
+**2. `reactions` (List of Reactions):**
+   - Each reaction is a dictionary.
+   - **`equation`**: Chemical reaction string (e.g., `A + B => C`).
+   - **`rate-constant`**: Arrhenius parameters `{A: ..., b: ..., Ea: ...}`. *Always required*, acts as a placeholder if `newAttribute` is used.
+   - **`type`**: Reaction type (e.g., `elementary`).
+   - **`duplicate`**: `True` if the same reaction can appear multiple times.
+   - **`newAttribute`** (Custom Reaction Property - Optional):
+     - Can be a dictionary with `unit` and an attribute name (`Bolsig`, `K`, etc.).
+       - `Bolsig`: List of numerical coefficients.
+       - `K`: String expression for rate constant using `vars`.
+     - Or a direct string expression using `vars` (unit from `newAttributeSet`).
+   - **`energyExchange`** (Energy Transfer - Optional):
+     - `type`: How energy is exchanged (`ratios`, `valueseV`).
+     - `R`: List of ratios for product energy distribution.
+     - `val`: List of energy values (eV) for each species.
+     - `fix`: `True` to prevent automatic energy balancing.
 
 ```yaml
 newAttributeSet:
-  unit: m # Default unit for new attributes
-  vars: {T: 'T',Tv: 'Tv', Te: 'Te'} # Var mappings
+unit: m
+vars: {T: 'T',Tv: 'Tv', Te: 'Te'}
 
-reactions:
-  # equation: 'R1 => P1 + P2'
-  # rate-constant: {A: ..., b: ..., Ea: ...} # Arrhenius (placeholder if newAttribute used)
-  # type: elementary/three-body/...
-  # duplicate: True/False # Same reaction can appear twice
-  # newAttribute: # Optional, new reaction expression
-  #   unit: ...
-  #   Bolsig: [...] # List of coefficients
-  #   K: '(expression)' # Rate constant expression using vars
-  #   (expression) # Directly using vars, unit from newAttributeSet
-  # energyExchange: # Optional, energy exchange details
-  #   type: ratios/valueseV/...
-  #   R: [...] # Ratios for energy distribution
-  #   val: [...] # Energy values (eV)
-  #   fix: True # Fix specified values
+reactions: 
+- equation: ele + N2 => ele + N2_A
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  newAttribute: {unit: m, Bolsig: [-24.62, ...]}
+  energyExchange: {type: valueseV, val: [0, 0, 6.17], fix: True}
 
-
-  - equation: ele + N2 => ele + N2_A
-    rate-constant: {A: 0, b: 0, Ea: 1}
-    newAttribute: {unit: m, Bolsig: [-24.62, ...]}
-    energyExchange: {type: valueseV, val: [0, 0, 6.17], fix: True}
-
-  - equation: N2 + N2_ap => N2_B + N2
-    rate-constant: {A: 0, b: 0, Ea: 1}
-    newAttribute: {unit: cm, K: '(2.8e-13)'}
+- equation: N2 + N2_ap => N2_B + N2
+  rate-constant: {A: 0, b: 0, Ea: 1}
+  newAttribute: {unit: cm, K: '(2.8e-13)'}
 
 ```
