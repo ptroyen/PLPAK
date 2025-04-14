@@ -1,6 +1,6 @@
-PLPAK Reaction Mechanism Format (Short Description)
+## PLPAK Reaction Mechanism Format (Short Description)
 
-This format extends Cantera for custom reaction attributes.
+### This format extends Cantera for custom reaction attributes.
 
 
 **1. `newAttributeSet` (Global Settings):**
@@ -19,10 +19,10 @@ This format extends Cantera for custom reaction attributes.
        - `K`: String expression for rate constant using `vars`.
      - Or a direct string expression using `vars` (unit from `newAttributeSet`).
    - **`energyExchange`** (Energy Transfer - Optional):
-     - `type`: How energy is exchanged (`ratios`, `valueseV`).
+     - `type`: How energy is exchanged (`ratios`, `valueseV`) between the three tempearture modes.
      - `R`: List of ratios for product energy distribution.
-     - `val`: List of energy values (eV) for each species.
-     - `fix`: `True` to prevent automatic energy balancing.
+     - `val`: List of energy values (eV) for each energy mode.
+     - `fix`: `True` to prevent automatic energy balancing. If `True` uses given energy exchange values and doesnt overwride by energy balance.
 
 ```yaml
 newAttributeSet:
