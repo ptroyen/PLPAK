@@ -47,7 +47,7 @@ class LaserModel:
         self.shapeConstant = 'constant'
         # based on the shape, use the appropriate function
         self.useShape = kwargs.get('shape', self.shapeGauss) # by default use gauss
-        self.updateIn = self.updateInConstant
+        self.updateIn = self.updateInGauss
         if self.useShape == self.shapeShaped:
             self.updateIn = self.updateInShaped
         if self.useShape == self.shapeConstant:

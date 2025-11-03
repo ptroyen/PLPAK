@@ -122,6 +122,11 @@ class System(ABC):
         self.bolsig_en = np.array([-29.97, 0.3164, -0.4094, 0.4047E-01, -0.1363E-02]) # m3/s , for N2
         # self.bolsig_en = np.array([-29.95, 0.3370, -0.3595, 0.2342E-01, -0.3446E-03]) # m3/s , for Air , should be overwritten by actual values
 
+        self.bgID = 0
+        try:
+            self.bgID = self.gas.species_index('N2')
+        except ValueError:
+            pass
 
         # flags
         self.verbose = verbose
@@ -231,6 +236,20 @@ class System(ABC):
     # Methods Required for the system object
     ## base methods: cp_mix(self), hsp(self), pressure(self), density(self)
     ## abstract methods: Krxn(self), Wrxn(self), dYdt(self), dTdt(self), dhrxn(self), Qrxn(self), Qdot(self)
+    def get_electron_index(self):
+        """Helper method to find electron species index regardless of naming convention.
+        
+        Checks common electron species names: 'E', 'e-', 'E-', 'ele'
+        Returns the first match found or raises ValueError if no electron species found.
+        """
+        gas = self.gas
+        electron_names = ['E', 'e-', 'E-', 'ele']
+        for e_name in electron_names:
+            try:
+                return gas.species_index(e_name)
+            except ValueError:
+                continue
+        raise ValueError("No electron species found in mechanism. Expected one of: " + str(electron_names))
 
     def pressure(self):
         '''
@@ -242,7 +261,7 @@ class System(ABC):
         Tg = self.Temp[0]
         Tv = self.Temp[1]
         Te = self.Temp[2]
-        eleID = self.gas.species_index('ele')
+        eleID = self.get_electron_index()
 
         p = 0.0
         for i in range(len(self.Ysp)):
@@ -260,7 +279,7 @@ class System(ABC):
         Uses the Ysp and Temp to calculate the density.
         Ysp is in number density and Temp is in K.
         '''
-        eleID = self.gas.species_index('ele')
+        # eleID = self.gas.species_index('ele')
 
         rhos = (self.Ysp*self.spMw/Na)
         rho = np.sum(rhos)
@@ -272,7 +291,7 @@ class System(ABC):
         Calculate the enthalpy of each species in J/kmol.
         '''
         gas = self.gas
-        eleID = gas.species_index('ele')
+        eleID = self.get_electron_index()
         Tg = self.Temp[0]
         Tv = self.Temp[1]
         Te = self.Temp[2]
@@ -440,8 +459,8 @@ class System(ABC):
         Tv = self.Temp[1]
         Te = self.Temp[2]
 
-        nN2 = self.Ysp[self.gas.species_index('N2')]
-        ne = self.Ysp[self.gas.species_index('ele')]
+        nN2 = self.Ysp[self.bgID] # number density of N2
+        ne = self.Ysp[self.get_electron_index()]
 
         # eID = self.gas.species_index('ele')
         # Tv = self.Temp[1]

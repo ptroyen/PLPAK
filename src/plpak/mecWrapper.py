@@ -724,7 +724,7 @@ class PlasmaSolver(System):
 
         # find the reactions with electrons as reactants
         # gas.reactant_stoich_coeffs()[gas.species_index('ele'), i] == 0
-        self.idReacEle = [i for i in range(self.nrxn) if self.plMech.reactants[self.gas.species_index('ele'), i] > 0]
+        self.idReacEle = [i for i in range(self.nrxn) if self.plMech.reactants[self.get_electron_index(), i] > 0]
 
 
 
@@ -769,7 +769,7 @@ class PlasmaSolver(System):
 
         # find the reactions with electrons as reactants
         # gas.reactant_stoich_coeffs()[gas.species_index('ele'), i] == 0
-        self.idReacEle = [i for i in range(self.nrxn) if reactants[self.gas.species_index('ele'), i] > 0]
+        self.idReacEle = [i for i in range(self.nrxn) if reactants[self.get_electron_index(), i] > 0]
 
         # # endothermic
         # self.idEndo0 = [i for i in range(self.nrxn) if hNet[i] > 0]
