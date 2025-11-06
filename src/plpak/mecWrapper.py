@@ -137,8 +137,8 @@ class PlasmaMechanism:
         # reactants = gas.reactant_stoich_coeffs() # stoichiometric coefficients for reactants
         # products = gas.product_stoich_coeffs() # stoichiometric coefficients for products
 
-        reactants = gas.reactant_stoich_coeffs3 # stoichiometric coefficients for reactants
-        products = gas.product_stoich_coeffs3 # stoichiometric coefficients for products
+        reactants = gas.reactant_stoich_coeffs # stoichiometric coefficients for reactants
+        products = gas.product_stoich_coeffs # stoichiometric coefficients for products
 
         # change reactants and products to integer values
         reactants = reactants.astype(int)
