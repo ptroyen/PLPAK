@@ -64,8 +64,8 @@ class System(ABC):
         # self.gas = gas
         self.spMw = self.gas.molecular_weights*1.0e-3 # kg/mol
 
-        reactants = self.gas.reactant_stoich_coeffs3 # stoichiometric coefficients for reactants
-        products = self.gas.product_stoich_coeffs3 # stoichiometric coefficients for products
+        reactants = self.gas.reactant_stoich_coeffs # stoichiometric coefficients for reactants
+        products = self.gas.product_stoich_coeffs # stoichiometric coefficients for products
 
         # change reactants and products to integer values
         reactants = reactants.astype(int)
