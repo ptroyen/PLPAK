@@ -19,7 +19,7 @@ If you utilize the package in your research, **please cite the following papers*
 # Installation
 - Tested on the following
     - Python 3.9.20
-    - Cantera==2.6.0
+    - Cantera==3.x
     - matplotlib==3.9.2
     - Scipy and Sympy (for full functionality) 
 
